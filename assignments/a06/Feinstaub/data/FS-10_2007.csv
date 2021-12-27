@@ -1,0 +1,435 @@
+﻿"Bundesland / Messnetz";Stationscode;Stationsname;Stationsumgebung;"Art der Station";"Jahresmittelwert in µg/m³";"Zahl der Tageswerte über 50 µg/m3"
+Baden-Württemberg;DEBW004;Eggenstein;"ländlich stadtnah";Hintergrund;19;8
+Baden-Württemberg;DEBW006;Mannheim-Mitte;"städtisches Gebiet";Hintergrund;24;17
+Baden-Württemberg;DEBW007;Mannheim-Süd;"städtisches Gebiet";Hintergrund;23;16
+Baden-Württemberg;DEBW009;Heidelberg;"städtisches Gebiet";Hintergrund;22;13
+Baden-Württemberg;DEBW010;Wiesloch;"vorstädtisches Gebiet";Hintergrund;19;10
+Baden-Württemberg;DEBW013;"Stuttgart-Bad Cannstatt";"städtisches Gebiet";Hintergrund;23;16
+Baden-Württemberg;DEBW015;Heilbronn;"städtisches Gebiet";Hintergrund;23;19
+Baden-Württemberg;DEBW019;Ulm;"städtisches Gebiet";Hintergrund;20;14
+Baden-Württemberg;DEBW023;"Weil am Rhein";"vorstädtisches Gebiet";Hintergrund;18;3
+Baden-Württemberg;DEBW024;Ludwigsburg;"vorstädtisches Gebiet";Hintergrund;20;13
+Baden-Württemberg;DEBW026;Plochingen;"vorstädtisches Gebiet";Hintergrund;20;13
+Baden-Württemberg;DEBW027;Reutlingen;"städtisches Gebiet";Hintergrund;20;13
+Baden-Württemberg;DEBW029;Aalen;"vorstädtisches Gebiet";Hintergrund;19;11
+Baden-Württemberg;DEBW030;"Welzheimer Wald";"ländliches Gebiet";Hintergrund;14;4
+Baden-Württemberg;DEBW031;Schwarzwald-Süd;"ländlich regional";Hintergrund;11;2
+Baden-Württemberg;DEBW032;Pforzheim-Mitte;"städtisches Gebiet";Hintergrund;20;16
+Baden-Württemberg;DEBW034;Waiblingen;"vorstädtisches Gebiet";Hintergrund;20;12
+Baden-Württemberg;DEBW037;Freudenstadt;"vorstädtisches Gebiet";Hintergrund;12;1
+Baden-Württemberg;DEBW038;Friedrichshafen;"städtisches Gebiet";Hintergrund;18;11
+Baden-Württemberg;DEBW039;Villingen-Schwenningen;"vorstädtisches Gebiet";Hintergrund;16;3
+Baden-Württemberg;DEBW042;Bernhausen;"vorstädtisches Gebiet";Hintergrund;23;21
+Baden-Württemberg;DEBW046;Biberach;"vorstädtisches Gebiet";Hintergrund;18;4
+Baden-Württemberg;DEBW052;Konstanz;"städtisches Gebiet";Hintergrund;20;11
+Baden-Württemberg;DEBW056;"Schwäbisch Hall";"vorstädtisches Gebiet";Hintergrund;20;10
+Baden-Württemberg;DEBW059;Tauberbischofsheim;"vorstädtisches Gebiet";Hintergrund;17;6
+Baden-Württemberg;DEBW073;Neuenburg;"vorstädtisches Gebiet";Hintergrund;20;9
+Baden-Württemberg;DEBW076;Baden-Baden;"vorstädtisches Gebiet";Hintergrund;17;10
+Baden-Württemberg;DEBW081;Karlsruhe-Nordwest;"städtisches Gebiet";Hintergrund;19;12
+Baden-Württemberg;DEBW084;Freiburg;"städtisches Gebiet";Hintergrund;18;11
+Baden-Württemberg;DEBW087;"Schwäbische Alb";"ländlich regional";Hintergrund;14;4
+Baden-Württemberg;DEBW103;Odenwald;"ländliches Gebiet";Hintergrund;14;3
+Baden-Württemberg;DEBW107;Tübingen;"vorstädtisches Gebiet";Hintergrund;18;9
+Baden-Württemberg;DEBW110;Pfullendorf;"vorstädtisches Gebiet";Hintergrund;18;5
+Baden-Württemberg;DEBW111;Offenburg;"vorstädtisches Gebiet";Hintergrund;19;10
+Baden-Württemberg;DEBW112;Gärtringen;"vorstädtisches Gebiet";Hintergrund;18;6
+Baden-Württemberg;DEBW005;Mannheim-Nord;"vorstädtisches Gebiet";Industrie;22;11
+Baden-Württemberg;DEBW022;Kehl;"vorstädtisches Gebiet";Industrie;21;11
+Baden-Württemberg;DEBW001;Karlsruhe-Mitte;"städtisches Gebiet";Verkehr;23;15
+Baden-Württemberg;DEBW011;Stuttgart-Zuffenhausen;"städtisches Gebiet";Verkehr;23;21
+Baden-Württemberg;DEBW040;Waldshut;"vorstädtisches Gebiet";Verkehr;19;4
+Baden-Württemberg;DEBW080;"Karlsruhe Reinhold-Frank-Straße";"städtisches Gebiet";Verkehr;26;16
+Baden-Württemberg;DEBW098;"Mannheim Friedrichsring";"städtisches Gebiet";Verkehr;28;26
+Baden-Württemberg;DEBW099;"Stuttgart Arnulf-Klett-Platz";"städtisches Gebiet";Verkehr;31;32
+Baden-Württemberg;DEBW116;"Stuttgart Hohenheimer Straße";"städtisches Gebiet";Verkehr;35;52
+Baden-Württemberg;DEBW117;"Ludwigsburg Friedrichstraße";"städtisches Gebiet";Verkehr;35;57
+Baden-Württemberg;DEBW118;"Stuttgart Am Neckartor";"städtisches Gebiet";Verkehr;44;110
+Baden-Württemberg;DEBW119;"Stuttgart Siemensstraße (S)";"städtisches Gebiet";Verkehr;36;60
+Baden-Württemberg;DEBW120;"Leonberg Grabenstraße";"städtisches Gebiet";Verkehr;33;48
+Baden-Württemberg;DEBW121;"Pleidelsheim Beihinger Straße";"städtisches Gebiet";Verkehr;31;43
+Baden-Württemberg;DEBW122;"Freiburg Schwarzwaldstraße";"städtisches Gebiet";Verkehr;28;21
+Baden-Württemberg;DEBW123;"Reutlingen Lederstraße (S)";"städtisches Gebiet";Verkehr;26;8
+Baden-Württemberg;DEBW124;"Heidelberg Karlsruher Straße (S)";"städtisches Gebiet";Verkehr;29;29
+Baden-Württemberg;DEBW125;"Pfinztal Karlsruher Straße";"vorstädtisches Gebiet";Verkehr;29;24
+Baden-Württemberg;DEBW126;"Karlsruhe Kriegsstraße";"städtisches Gebiet";Verkehr;27;22
+Baden-Württemberg;DEBW127;"Freiburg Zähringer Straße";"städtisches Gebiet";Verkehr;27;22
+Baden-Württemberg;DEBW128;"Mühlacker Stuttgarter Straße";"vorstädtisches Gebiet";Verkehr;32;38
+Baden-Württemberg;DEBW130;"Pforzheim Jahnstraße";"städtisches Gebiet";Verkehr;26;22
+Baden-Württemberg;DEBW132;"Heilbronn Weinsberger Straße (S)";"städtisches Gebiet";Verkehr;32;39
+Baden-Württemberg;DEBW133;"Ilsfeld König-Wilhelm-Straße";"vorstädtisches Gebiet";Verkehr;31;43
+Baden-Württemberg;DEBW134;"Stuttgart Waiblinger Straße";"städtisches Gebiet";Verkehr;32;40
+Baden-Württemberg;DEBW135;"Herrenberg Hindenburger Straße";"städtisches Gebiet";Verkehr;28;30
+Baden-Württemberg;DEBW136;"Tübingen Mühlstraße";"städtisches Gebiet";Verkehr;29;28
+Baden-Württemberg;DEBW137;"Tübingen Jesinger Hauptstraße";"ländlich stadtnah";Verkehr;34;46
+Baden-Württemberg;DEBW138;"Ulm Zinglerstraße";"städtisches Gebiet";Verkehr;32;39
+Baden-Württemberg;DEBW141;"Wiesloch Baiertaler Straße (S)";"vorstädtisches Gebiet";Verkehr;35;49
+Baden-Württemberg;DEBW142;"Markgröningen Grabenstraße";"vorstädtisches Gebiet";Verkehr;34;47
+Baden-Württemberg;DEBW143;"Schramberg Oberndorfer Straße";"vorstädtisches Gebiet";Verkehr;25;10
+Baden-Württemberg;DEBW144;"Walzbachtal Bahnhofstraße";"vorstädtisches Gebiet";Verkehr;33;34
+Baden-Württemberg;DEBW145;"Heidenheim Wilhelmstraße";"vorstädtisches Gebiet";Verkehr;27;20
+Baden-Württemberg;DEBW147;"Reutlingen Lederstraße-Ost";"städtisches Gebiet";Verkehr;38;44
+Bayern;DEBY002;Arzberg/Egerstraße;"vorstädtisches Gebiet";Hintergrund;20;10
+Bayern;DEBY003;"Aschaffenburg/Schweinheimer Straße";"städtisches Gebiet";Hintergrund;23;14
+Bayern;DEBY004;"Kleinwallstadt/Hofstetter Straße";"vorstädtisches Gebiet";Hintergrund;21;10
+Bayern;DEBY005;Aschaffenburg/Bussardweg;"vorstädtisches Gebiet";Hintergrund;21;11
+Bayern;DEBY007;Augsburg/Bourges-Platz;"städtisches Gebiet";Hintergrund;23;20
+Bayern;DEBY009;Bamberg/Löwenbrücke;"städtisches Gebiet";Hintergrund;24;18
+Bayern;DEBY012;"Burghausen/Marktler Straße";"vorstädtisches Gebiet";Hintergrund;23;20
+Bayern;DEBY013;Mehring/Sportplatz;"ländlich regional";Hintergrund;20;11
+Bayern;DEBY020;Hof/LfU;"vorstädtisches Gebiet";Hintergrund;21;10
+Bayern;DEBY030;"Saal a.d. Donau/Regensburger Straße";"vorstädtisches Gebiet";Hintergrund;22;13
+Bayern;DEBY031;"Kempten (Allgäu)/Westendstraße";"vorstädtisches Gebiet";Hintergrund;18;10
+Bayern;DEBY032;Kulmbach/Konrad-Adenauer-Straße;"städtisches Gebiet";Hintergrund;21;9
+Bayern;DEBY039;München/Lothstraße;"städtisches Gebiet";Hintergrund;23;19
+Bayern;DEBY047;"Naila/Selbitzer Berg";"ländlich stadtnah";Hintergrund;17;4
+Bayern;DEBY049;"Neustadt a.d. Donau/Eining";"ländlich regional";Hintergrund;19;9
+Bayern;DEBY052;Neu-Ulm/Gabelsbergerstraße;"städtisches Gebiet";Hintergrund;25;26
+Bayern;DEBY058;Nürnberg/Muggenhof;"städtisches Gebiet";Hintergrund;23;13
+Bayern;DEBY062;"Regen/Bodenmaiser Straße";"vorstädtisches Gebiet";Hintergrund;19;3
+Bayern;DEBY067;"Schwandorf/Wackersdorfer Straße";"vorstädtisches Gebiet";Hintergrund;21;10
+Bayern;DEBY068;Schweinfurt/Obertor;"städtisches Gebiet";Hintergrund;20;9
+Bayern;DEBY072;Tiefenbach/Altenschneeberg;"ländlich regional";Hintergrund;14;0
+Bayern;DEBY075;"Weiden i.d.OPf./Nikolaistraße";"städtisches Gebiet";Hintergrund;22;12
+Bayern;DEBY088;Trostberg/Schwimmbadstraße;"vorstädtisches Gebiet";Hintergrund;20;13
+Bayern;DEBY089;München/Johanneskirchen;"vorstädtisches Gebiet";Hintergrund;21;12
+Bayern;DEBY093;Sulzbach-Rosenberg/Lohe;"vorstädtisches Gebiet";Hintergrund;21;9
+Bayern;DEBY099;Augsburg/LfU;"vorstädtisches Gebiet";Hintergrund;20;15
+Bayern;DEBY109;Andechs/Rothenfeld;"ländlich regional";Hintergrund;17;7
+Bayern;DEBY113;Erlangen/Kraepelinstraße;"vorstädtisches Gebiet";Hintergrund;19;7
+Bayern;DEBY118;Passau/Stelzhamerstraße;"städtisches Gebiet";Hintergrund;24;19
+Bayern;DEBY001;Ansbach/Residenzstraße;"städtisches Gebiet";Verkehr;24;15
+Bayern;DEBY006;Augsburg/Königsplatz;"städtisches Gebiet";Verkehr;31;37
+Bayern;DEBY010;Bayreuth/Rathaus;"städtisches Gebiet";Verkehr;23;15
+Bayern;DEBY014;Coburg/Lossaustraße;"städtisches Gebiet";Verkehr;22;12
+Bayern;DEBY021;Ingolstadt/Rechbergstraße;"städtisches Gebiet";Verkehr;23;22
+Bayern;DEBY028;"Kelheim/Regensburger Straße";"städtisches Gebiet";Verkehr;23;16
+Bayern;DEBY033;Landshut/Podewilsstraße;"städtisches Gebiet";Verkehr;23;16
+Bayern;DEBY035;"Lindau (Bodensee)/Friedrichshafener Straße";"städtisches Gebiet";Verkehr;24;24
+Bayern;DEBY037;München/Stachus;"städtisches Gebiet";Verkehr;30;30
+Bayern;DEBY053;Nürnberg/Bahnhof;"städtisches Gebiet";Verkehr;24;13
+Bayern;DEBY054;Nürnberg/Ziegelsteinstraße;"städtisches Gebiet";Verkehr;23;12
+Bayern;DEBY056;Fürth/Theresienstraße;"städtisches Gebiet";Verkehr;26;16
+Bayern;DEBY063;Regensburg/Rathaus;"städtisches Gebiet";Verkehr;29;35
+Bayern;DEBY076;Würzburg/Kardinal-Faulhaber-Platz;"städtisches Gebiet";Verkehr;23;17
+Bayern;DEBY085;München/Luise-Kiesselbach-Platz;"städtisches Gebiet";Verkehr;26;24
+Bayern;DEBY110;Augsburg/Karlstraße;"städtisches Gebiet";Verkehr;29;27
+Bayern;DEBY111;Bayreuth/Hohenzollernring;"städtisches Gebiet";Verkehr;26;22
+Bayern;DEBY114;München/Prinzregentenstraße;"städtisches Gebiet";Verkehr;27;15
+Bayern;DEBY115;"München/Landshuter Allee";"städtisches Gebiet";Verkehr;36;53
+Bayern;DEBY116;Erlangen/Pfarrstraße;"städtisches Gebiet";Verkehr;24;11
+Bayern;DEBY119;"Würzburg/Stadtring Süd";"städtisches Gebiet";Verkehr;25;5
+Bayern;DEBY120;Nürnberg/Von-der-Tann-Straße;"städtisches Gebiet";Verkehr;29;25
+Berlin;DEBE010;"Berlin Wedding";"städtisches Gebiet";Hintergrund;22;12
+Berlin;DEBE018;"Berlin Schöneberg";"städtisches Gebiet";Hintergrund;22;13
+Berlin;DEBE027;"Berlin Marienfelde";"ländlich stadtnah";Hintergrund;22;12
+Berlin;DEBE032;"Berlin Grunewald (3.5 m)";"ländlich stadtnah";Hintergrund;20;9
+Berlin;DEBE034;"Berlin Neukölln";"städtisches Gebiet";Hintergrund;25;17
+Berlin;DEBE051;"Berlin Buch";"vorstädtisches Gebiet";Hintergrund;21;9
+Berlin;DEBE056;"Berlin Friedrichshagen";"ländlich stadtnah";Hintergrund;22;9
+Berlin;DEBE068;"Berlin Mitte";"städtisches Gebiet";Hintergrund;24;13
+Berlin;DEBE061;"Berlin Schildhornstraße";"städtisches Gebiet";Verkehr;27;20
+Berlin;DEBE063;"Berlin Silbersteinstraße";"städtisches Gebiet";Verkehr;30;30
+Berlin;DEBE064;"Berlin Karl-Marx-Straße";"städtisches Gebiet";Verkehr;30;23
+Berlin;DEBE065;"Berlin Frankfurter Allee";"städtisches Gebiet";Verkehr;31;29
+Berlin;DEBE067;"Berlin Hardenbergplatz";"städtisches Gebiet";Verkehr;26;17
+Brandenburg;DEBB007;"Elsterwerda, 1992-2020";"vorstädtisches Gebiet";Hintergrund;24;14
+Brandenburg;DEBB021;Potsdam-Zentrum;"städtisches Gebiet";Hintergrund;20;9
+Brandenburg;DEBB031;"Königs Wusterhausen,1993-2008";"vorstädtisches Gebiet";Hintergrund;23;14
+Brandenburg;DEBB042;"Frankfurt (Oder), 1997-2014";"vorstädtisches Gebiet";Hintergrund;25;18
+Brandenburg;DEBB048;Neuruppin;"vorstädtisches Gebiet";Hintergrund;19;6
+Brandenburg;DEBB053;"Hasenholz (Buckow)";"ländlich regional";Hintergrund;20;8
+Brandenburg;DEBB055;"Brandenburg a.d. Havel";"vorstädtisches Gebiet";Hintergrund;20;9
+Brandenburg;DEBB063;Wittenberge;"vorstädtisches Gebiet";Hintergrund;18;6
+Brandenburg;DEBB064;Cottbus;"städtisches Gebiet";Hintergrund;22;16
+Brandenburg;DEBB065;"Lütte (Belzig)";"ländlich regional";Hintergrund;17;3
+Brandenburg;DEBB066;Spreewald;"ländlich regional";Hintergrund;21;12
+Brandenburg;DEBB067;Nauen;"vorstädtisches Gebiet";Hintergrund;21;12
+Brandenburg;DEBB075;"Potsdam, Groß Glienicke";"vorstädtisches Gebiet";Hintergrund;19;1
+Brandenburg;DEBB026;Spremberg-Süd;"vorstädtisches Gebiet";Industrie;22;14
+Brandenburg;DEBB029;"Schwedt (Oder)";"vorstädtisches Gebiet";Industrie;21;11
+Brandenburg;DEBB032;Eisenhüttenstadt;"vorstädtisches Gebiet";Industrie;22;17
+Brandenburg;DEBB044;"Cottbus, Bahnhofstr.";"städtisches Gebiet";Verkehr;35;59
+Brandenburg;DEBB045;"Frankfurt (Oder), Leipziger Str.";"städtisches Gebiet";Verkehr;30;35
+Brandenburg;DEBB049;"Brandenburg, Neuendorfer Str.";"städtisches Gebiet";Verkehr;26;25
+Brandenburg;DEBB054;"Potsdam, Zeppelinstr.";"städtisches Gebiet";Verkehr;27;20
+Brandenburg;DEBB068;"Bernau, Lohmühlenstr.";"städtisches Gebiet";Verkehr;26;21
+Brandenburg;DEBB072;"Teltow, Potsdamer Str.";"städtisches Gebiet";Verkehr;28;27
+Brandenburg;DEBB073;"Potsdam, Großbeerenstr.";"städtisches Gebiet";Verkehr;26;15
+Brandenburg;DEBB074;"Lübben, Puschkinstr.";"städtisches Gebiet";Verkehr;24;16
+Bremen;DEHB001;Bremen-Mitte;"städtisches Gebiet";Hintergrund;20;3
+Bremen;DEHB003;Bremen-West;"städtisches Gebiet";Hintergrund;23;6
+Bremen;DEHB004;Bremen-Nord;"städtisches Gebiet";Hintergrund;19;2
+Bremen;DEHB005;Bremerhaven-Hansastraße;"städtisches Gebiet";Hintergrund;20;2
+Bremen;DEHB006;Bremen-Dobben;"städtisches Gebiet";Verkehr;31;30
+Bremen;DEHB007;"Bremen Verkehr 2";"städtisches Gebiet";Verkehr;34;41
+Hamburg;DEHH008;"Hamburg Sternschanze";"städtisches Gebiet";Hintergrund;27;23
+Hamburg;DEHH021;"Hamburg Tatenberg";"vorstädtisches Gebiet";Hintergrund;19;7
+Hamburg;DEHH033;"Hamburg Flughafen Nord";"städtisches Gebiet";Hintergrund;19;8
+Hamburg;DEHH059;"Hamburg Wilhelmsburg";"städtisches Gebiet";Hintergrund;21;6
+Hamburg;DEHH074;"Hamburg Billstedt";"städtisches Gebiet";Hintergrund;23;10
+Hamburg;DEHH015;"Hamburg Veddel";"städtisches Gebiet";Industrie;24;16
+Hamburg;DEHH016;"Hamburg Billbrook";"städtisches Gebiet";Industrie;25;8
+Hamburg;DEHH072;"Hamburg Finkenwerder West";"städtisches Gebiet";Industrie;25;18
+Hamburg;DEHH026;"Hamburg Stresemannstraße";"städtisches Gebiet";Verkehr;28;22
+Hamburg;DEHH068;"Hamburg Habichtstraße";"städtisches Gebiet";Verkehr;31;27
+Hamburg;DEHH070;"Hamburg Max-Brauer-Allee II (Straße)";"städtisches Gebiet";Verkehr;28;14
+Hamburg;DEHH075;"Hamburg Billwerder II";"ländlich stadtnah";Verkehr;23;7
+Hessen;DEHE001;Darmstadt;"städtisches Gebiet";Hintergrund;19;9
+Hessen;DEHE005;Frankfurt-Höchst;"städtisches Gebiet";Hintergrund;23;17
+Hessen;DEHE008;"Frankfurt Ost";"städtisches Gebiet";Hintergrund;23;16
+Hessen;DEHE011;Hanau;"städtisches Gebiet";Hintergrund;22;13
+Hessen;DEHE018;Raunheim;"städtisches Gebiet";Hintergrund;20;14
+Hessen;DEHE020;Wetzlar;"städtisches Gebiet";Hintergrund;28;22
+Hessen;DEHE022;"Wiesbaden Süd";"städtisches Gebiet";Hintergrund;22;16
+Hessen;DEHE024;Witzenhausen/Wald;"ländliches Gebiet";Hintergrund;14;1
+Hessen;DEHE028;Fürth/Odenwald;"ländliches Gebiet";Hintergrund;14;2
+Hessen;DEHE030;Marburg;"städtisches Gebiet";Hintergrund;16;6
+Hessen;DEHE032;Bebra;"städtisches Gebiet";Hintergrund;20;7
+Hessen;DEHE043;Riedstadt;"ländlich stadtnah";Hintergrund;21;15
+Hessen;DEHE044;Limburg;"städtisches Gebiet";Hintergrund;19;9
+Hessen;DEHE045;Michelstadt;"städtisches Gebiet";Hintergrund;18;9
+Hessen;DEHE046;"Bad Arolsen";"ländliches Gebiet";Hintergrund;16;2
+Hessen;DEHE051;Wasserkuppe;"ländliches Gebiet";Hintergrund;12;1
+Hessen;DEHE058;Fulda-Mitte;"städtisches Gebiet";Hintergrund;20;10
+Hessen;DEHE060;Kellerwald;"ländlich regional";Hintergrund;13;1
+Hessen;DEHE014;Kassel-Nord;"städtisches Gebiet";Verkehr;22;9
+Hessen;DEHE037;"Wiesbaden Ringkirche";"städtisches Gebiet";Verkehr;26;20
+Hessen;DEHE040;"Darmstadt Hügelstraße";"städtisches Gebiet";Verkehr;27;29
+Hessen;DEHE041;"Frankfurt Friedberger Landstraße";"städtisches Gebiet";Verkehr;28;33
+Hessen;DEHE049;"Kassel Fünffensterstraße";"städtisches Gebiet";Verkehr;29;33
+Hessen;DEHE059;"Fulda Petersberger Straße";"städtisches Gebiet";Verkehr;23;16
+Hessen;DEHE061;"Gießen Westanlage";"städtisches Gebiet";Verkehr;25;16
+Hessen;DEHE062;"Marburg Universitätsstraße";"städtisches Gebiet";Verkehr;22;11
+Hessen;DEHE063;"Heppenheim Lehrstraße";"städtisches Gebiet";Verkehr;26;31
+Mecklenburg-Vorpommern;DEMV004;Gülzow;"ländliches Gebiet";Hintergrund;14;1
+Mecklenburg-Vorpommern;DEMV007;Rostock-Stuthof;"vorstädtisches Gebiet";Hintergrund;17;0
+Mecklenburg-Vorpommern;DEMV012;Löcknitz;"ländliches Gebiet";Hintergrund;18;0
+Mecklenburg-Vorpommern;DEMV017;Göhlen;"ländliches Gebiet";Hintergrund;16;1
+Mecklenburg-Vorpommern;DEMV018;Zarrentin;"vorstädtisches Gebiet";Hintergrund;16;1
+Mecklenburg-Vorpommern;DEMV019;Güstrow;"städtisches Gebiet";Hintergrund;16;1
+Mecklenburg-Vorpommern;DEMV021;Rostock-Warnemünde;"städtisches Gebiet";Hintergrund;15;2
+Mecklenburg-Vorpommern;DEMV002;Rostock;"städtisches Gebiet";Verkehr;17;2
+Mecklenburg-Vorpommern;DEMV003;Neubrandenburg;"städtisches Gebiet";Verkehr;20;3
+Mecklenburg-Vorpommern;DEMV005;Schwerin;"städtisches Gebiet";Verkehr;18;3
+Mecklenburg-Vorpommern;DEMV006;Stralsund;"städtisches Gebiet";Verkehr;19;6
+Mecklenburg-Vorpommern;DEMV020;"Rostock Am Strande";"städtisches Gebiet";Verkehr;28;14
+Niedersachsen;DENI011;Braunschweig;"vorstädtisches Gebiet";Hintergrund;18;4
+Niedersachsen;DENI016;Oker/Harlingerode;"vorstädtisches Gebiet";Hintergrund;15;3
+Niedersachsen;DENI019;Solling;"ländliches Gebiet";Hintergrund;15;3
+Niedersachsen;DENI020;Wolfsburg;"vorstädtisches Gebiet";Hintergrund;17;3
+Niedersachsen;DENI028;Eichsfeld;"vorstädtisches Gebiet";Hintergrund;19;7
+Niedersachsen;DENI029;Ostfriesland;"vorstädtisches Gebiet";Hintergrund;19;4
+Niedersachsen;DENI031;Jadebusen;"ländliches Gebiet";Hintergrund;16;2
+Niedersachsen;DENI038;Osnabrück;"städtisches Gebiet";Hintergrund;18;7
+Niedersachsen;DENI041;Weserbergland;"vorstädtisches Gebiet";Hintergrund;19;7
+Niedersachsen;DENI042;Göttingen;"vorstädtisches Gebiet";Hintergrund;16;2
+Niedersachsen;DENI043;Emsland;"vorstädtisches Gebiet";Hintergrund;18;5
+Niedersachsen;DENI051;Wurmberg;"ländliches Gebiet";Hintergrund;11;0
+Niedersachsen;DENI052;Allertal;"vorstädtisches Gebiet";Hintergrund;17;2
+Niedersachsen;DENI054;Hannover;"städtisches Gebiet";Hintergrund;19;4
+Niedersachsen;DENI058;"Ostfries. Inseln";"ländliches Gebiet";Hintergrund;24;14
+Niedersachsen;DENI059;Elbmündung;"ländliches Gebiet";Hintergrund;16;1
+Niedersachsen;DENI060;Wendland;"ländliches Gebiet";Hintergrund;16;2
+Niedersachsen;DENI062;"Lüneburger Heide";"vorstädtisches Gebiet";Hintergrund;17;1
+Niedersachsen;DENI063;"Altes Land";"ländliches Gebiet";Hintergrund;17;2
+Niedersachsen;DENI053;Südoldenburg;"vorstädtisches Gebiet";Industrie;20;7
+Niedersachsen;DENI048;"Hannover Verkehr";"städtisches Gebiet";Verkehr;26;8
+Niedersachsen;DENI067;Osnabrück-Verkehr;"städtisches Gebiet";Verkehr;29;25
+Niedersachsen;DENI068;Göttingen-Verkehr;"städtisches Gebiet";Verkehr;27;23
+Niedersachsen;DENI071;Barbis-Verkehr;"vorstädtisches Gebiet";Verkehr;21;7
+Niedersachsen;DENI072;Burgdorf-Verkehr;"vorstädtisches Gebiet";Verkehr;23;7
+Niedersachsen;DENI073;Celle-Verkehr;"städtisches Gebiet";Verkehr;20;5
+Niedersachsen;DENI074;Hameln-Verkehr;"städtisches Gebiet";Verkehr;28;13
+Nordrhein-Westfalen;DENW002;Datteln-Hagem;"vorstädtisches Gebiet";Hintergrund;24;16
+Nordrhein-Westfalen;DENW006;Lünen-Niederaden;"vorstädtisches Gebiet";Hintergrund;24;16
+Nordrhein-Westfalen;DENW008;Dortmund-Eving;"städtisches Gebiet";Hintergrund;28;29
+Nordrhein-Westfalen;DENW022;Gelsenkirchen-Bismarck;"vorstädtisches Gebiet";Hintergrund;27;32
+Nordrhein-Westfalen;DENW024;Essen-Vogelheim;"städtisches Gebiet";Hintergrund;28;25
+Nordrhein-Westfalen;DENW029;Hattingen-Blankenstein;"vorstädtisches Gebiet";Hintergrund;23;9
+Nordrhein-Westfalen;DENW030;Wesel-Feldmark;"vorstädtisches Gebiet";Hintergrund;27;29
+Nordrhein-Westfalen;DENW038;Mülheim-Styrum;"städtisches Gebiet";Hintergrund;28;27
+Nordrhein-Westfalen;DENW040;Duisburg-Buchholz;"vorstädtisches Gebiet";Hintergrund;26;20
+Nordrhein-Westfalen;DENW042;Krefeld-Linn;"städtisches Gebiet";Hintergrund;24;16
+Nordrhein-Westfalen;DENW053;Köln-Chorweiler;"städtisches Gebiet";Hintergrund;23;10
+Nordrhein-Westfalen;DENW059;Köln-Rodenkirchen;"vorstädtisches Gebiet";Hintergrund;21;9
+Nordrhein-Westfalen;DENW062;Bonn-Auerberg;"vorstädtisches Gebiet";Hintergrund;25;15
+Nordrhein-Westfalen;DENW063;"Horn-Bad Meinberg (Egge)";"ländlich regional";Hintergrund;15;4
+Nordrhein-Westfalen;DENW064;"Simmerath (Eifel)";"ländlich regional";Hintergrund;15;0
+Nordrhein-Westfalen;DENW065;"Netphen Rothaargebirge";"ländlich regional";Hintergrund;13;2
+Nordrhein-Westfalen;DENW066;Nettetal-Kaldenkirchen;"ländlich stadtnah";Hintergrund;26;24
+Nordrhein-Westfalen;DENW067;Bielefeld-Ost;"städtisches Gebiet";Hintergrund;24;16
+Nordrhein-Westfalen;DENW068;Soest-Ost;"ländlich stadtnah";Hintergrund;18;7
+Nordrhein-Westfalen;DENW071;Düsseldorf-Lörick;"städtisches Gebiet";Hintergrund;24;13
+Nordrhein-Westfalen;DENW078;Ratingen-Tiefenbroich;"vorstädtisches Gebiet";Hintergrund;23;16
+Nordrhein-Westfalen;DENW079;Leverkusen-Manfort;"vorstädtisches Gebiet";Hintergrund;24;12
+Nordrhein-Westfalen;DENW080;Solingen-Wald;"vorstädtisches Gebiet";Hintergrund;22;12
+Nordrhein-Westfalen;DENW081;Borken-Gemen;"ländlich stadtnah";Hintergrund;23;16
+Nordrhein-Westfalen;DENW094;Aachen-Burtscheid;"städtisches Gebiet";Hintergrund;20;8
+Nordrhein-Westfalen;DENW095;Münster-Geist;"städtisches Gebiet";Hintergrund;23;9
+Nordrhein-Westfalen;DENW096;Mönchengladbach-Rheydt;"vorstädtisches Gebiet";Hintergrund;23;19
+Nordrhein-Westfalen;DENW114;Wuppertal-Langerfeld;"städtisches Gebiet";Hintergrund;24;13
+Nordrhein-Westfalen;DENW132;"Siegen Haardter Berg";"vorstädtisches Gebiet";Hintergrund;21;8
+Nordrhein-Westfalen;DENW179;Schwerte;"städtisches Gebiet";Hintergrund;23;11
+Nordrhein-Westfalen;DENW021;Bottrop-Welheim;"städtisches Gebiet";Industrie;28;24
+Nordrhein-Westfalen;DENW034;Duisburg-Walsum;"städtisches Gebiet";Industrie;29;29
+Nordrhein-Westfalen;DENW037;Duisburg-Meiderich;"vorstädtisches Gebiet";Industrie;30;33
+Nordrhein-Westfalen;DENW058;Hürth;"vorstädtisches Gebiet";Industrie;25;18
+Nordrhein-Westfalen;DENW074;Niederzier;"ländlich stadtnah";Industrie;29;28
+Nordrhein-Westfalen;DENW102;Duisburg-Bruckhausen;"städtisches Gebiet";Industrie;37;71
+Nordrhein-Westfalen;DENW117;Bochum-Stahlhausen;"städtisches Gebiet";Industrie;28;22
+Nordrhein-Westfalen;DENW129;"Datteln Bahnhof";"vorstädtisches Gebiet";Industrie;30;31
+Nordrhein-Westfalen;DENW131;"Duisburg Kiebitzmühlenstraße";"städtisches Gebiet";Industrie;37;55
+Nordrhein-Westfalen;DENW180;Grevenbroich-Gustorf;"vorstädtisches Gebiet";Industrie;32;46
+Nordrhein-Westfalen;DENW194;"Duisburg-Hüttenheim Klettenweg";"städtisches Gebiet";Industrie;32;46
+Nordrhein-Westfalen;DENW217;Jüchen;"vorstädtisches Gebiet";Industrie;30;23
+Nordrhein-Westfalen;DENW043;"Essen-Ost Steeler Straße";"städtisches Gebiet";Verkehr;28;31
+Nordrhein-Westfalen;DENW072;Düsseldorf-Mörsenbroich;"städtisches Gebiet";Verkehr;33;49
+Nordrhein-Westfalen;DENW077;"Hagen Emilienplatz";"städtisches Gebiet";Verkehr;24;15
+Nordrhein-Westfalen;DENW082;"Düsseldorf Corneliusstraße";"städtisches Gebiet";Verkehr;36;64
+Nordrhein-Westfalen;DENW097;"Wuppertal Friedrich-Engels-Allee";"städtisches Gebiet";Verkehr;29;27
+Nordrhein-Westfalen;DENW098;"Münster Friesenring";"städtisches Gebiet";Verkehr;25;23
+Nordrhein-Westfalen;DENW099;"Aachen Kaiserplatz";"städtisches Gebiet";Verkehr;28;25
+Nordrhein-Westfalen;DENW100;"Mönchengladbach Düsseldorfer Straße";"städtisches Gebiet";Verkehr;26;19
+Nordrhein-Westfalen;DENW101;"Dortmund Steinstraße";"städtisches Gebiet";Verkehr;28;31
+Nordrhein-Westfalen;DENW112;"Duisburg Kardinal-Galen-Straße";"städtisches Gebiet";Verkehr;29;43
+Nordrhein-Westfalen;DENW134;"Essen Gladbecker Straße";"städtisches Gebiet";Verkehr;36;61
+Nordrhein-Westfalen;DENW136;"Dortmund Brackeler Straße";"städtisches Gebiet";Verkehr;40;81
+Nordrhein-Westfalen;DENW177;"Bielefeld Stapenhorststraße";"städtisches Gebiet";Verkehr;22;11
+Nordrhein-Westfalen;DENW199;"Münster Weseler Straße 22";"städtisches Gebiet";Verkehr;32;29
+Nordrhein-Westfalen;DENW200;"Bielefeld Detmolder Straße";"städtisches Gebiet";Verkehr;26;26
+Nordrhein-Westfalen;DENW201;"Bottrop Peterstraße";"städtisches Gebiet";Verkehr;37;65
+Nordrhein-Westfalen;DENW202;"Siegen Sandstraße";"städtisches Gebiet";Verkehr;30;22
+Nordrhein-Westfalen;DENW203;"Herne Recklinghauser Straße";"städtisches Gebiet";Verkehr;35;59
+Nordrhein-Westfalen;DENW204;"Bochum Herner Straße";"städtisches Gebiet";Verkehr;35;54
+Nordrhein-Westfalen;DENW206;"Solingen Konrad-Adenauer-Straße";"städtisches Gebiet";Verkehr;30;26
+Nordrhein-Westfalen;DENW207;"Aachen Wilhelmstraße";"städtisches Gebiet";Verkehr;34;48
+Nordrhein-Westfalen;DENW208;"Gelsenkirchen Kurt-Schumacher-Straße";"städtisches Gebiet";Verkehr;40;84
+Nordrhein-Westfalen;DENW212;"Köln Turiner Straße";"städtisches Gebiet";Verkehr;32;25
+Rheinland-Pfalz;DERP001;Ludwigshafen-Oppau;"städtisches Gebiet";Hintergrund;20;11
+Rheinland-Pfalz;DERP002;Ludwigshafen-Mitte;"städtisches Gebiet";Hintergrund;20;7
+Rheinland-Pfalz;DERP007;Mainz-Mombach;"städtisches Gebiet";Hintergrund;17;9
+Rheinland-Pfalz;DERP008;Mainz-Goetheplatz;"städtisches Gebiet";Hintergrund;20;10
+Rheinland-Pfalz;DERP009;Mainz-Zitadelle;"städtisches Gebiet";Hintergrund;23;14
+Rheinland-Pfalz;DERP013;Westpfalz-Waldmohr;"ländliches Gebiet";Hintergrund;15;5
+Rheinland-Pfalz;DERP014;Hunsrück-Leisel;"ländliches Gebiet";Hintergrund;11;1
+Rheinland-Pfalz;DERP015;"Westeifel Wascheid";"ländliches Gebiet";Hintergrund;11;1
+Rheinland-Pfalz;DERP016;Westerwald-Herdorf;"ländliches Gebiet";Hintergrund;13;1
+Rheinland-Pfalz;DERP017;Pfälzerwald-Hortenkopf;"ländliches Gebiet";Hintergrund;13;2
+Rheinland-Pfalz;DERP021;Neuwied-Hafenstraße;"städtisches Gebiet";Hintergrund;19;9
+Rheinland-Pfalz;DERP022;"Bad Kreuznach-Bosenheimer Straße";"städtisches Gebiet";Hintergrund;18;11
+Rheinland-Pfalz;DERP025;Wörth-Marktplatz;"städtisches Gebiet";Hintergrund;17;8
+Rheinland-Pfalz;DERP028;Westerwald-Neuhäusel;"ländliches Gebiet";Hintergrund;13;0
+Rheinland-Pfalz;DERP042;"Pirmasens Schäferstr.";"städtisches Gebiet";Hintergrund;21;13
+Rheinland-Pfalz;DERP003;Ludwigshafen-Mundenheim;"städtisches Gebiet";Industrie;24;18
+Rheinland-Pfalz;DERP010;Mainz-Parcusstraße;"städtisches Gebiet";Verkehr;29;34
+Rheinland-Pfalz;DERP018;Speyer-St.-Guido-Stifts-Platz;"städtisches Gebiet";Verkehr;21;15
+Rheinland-Pfalz;DERP020;Trier-Ostallee;"städtisches Gebiet";Verkehr;24;14
+Rheinland-Pfalz;DERP023;Worms-Hagenstraße;"städtisches Gebiet";Verkehr;24;15
+Rheinland-Pfalz;DERP024;Koblenz-Friedrich-Ebert-Ring;"städtisches Gebiet";Verkehr;19;6
+Rheinland-Pfalz;DERP032;"Neuwied-Heddesdorfer Straße";"städtisches Gebiet";Verkehr;22;9
+Rheinland-Pfalz;DERP035;Kaiserslautern-Marienplatz;"städtisches Gebiet";Verkehr;20;9
+Rheinland-Pfalz;DERP036;"Trier Kaiserstraße";"städtisches Gebiet";Verkehr;20;3
+Rheinland-Pfalz;DERP041;Ludwigshafen-Heinigstraße;"städtisches Gebiet";Verkehr;25;22
+Rheinland-Pfalz;DERP045;"Koblenz-Hohenfelder Straße";"städtisches Gebiet";Verkehr;22;12
+Saarland;DESL010;Saarbrücken-Burbach;"städtisches Gebiet";Hintergrund;22;11
+Saarland;DESL012;Saarbrücken-City;"städtisches Gebiet";Hintergrund;21;11
+Saarland;DESL013;Saarlouis-Fraulautern;"vorstädtisches Gebiet";Hintergrund;22;13
+Saarland;DESL017;"Völklingen-City Stadionstr.";"städtisches Gebiet";Hintergrund;20;5
+Saarland;DESL019;Biringen;"ländlich regional";Hintergrund;17;6
+Saarland;DESL003;"Dillingen City";"städtisches Gebiet";Industrie;22;11
+Saarland;DESL020;Saarbrücken-Verkehr;"städtisches Gebiet";Verkehr;26;21
+Sachsen;DESN004;Bautzen;"städtisches Gebiet";Hintergrund;23;16
+Sachsen;DESN011;Chemnitz-Mitte;"städtisches Gebiet";Hintergrund;20;10
+Sachsen;DESN012;Delitzsch;"städtisches Gebiet";Hintergrund;21;9
+Sachsen;DESN017;Freiberg;"städtisches Gebiet";Hintergrund;23;15
+Sachsen;DESN019;Glauchau;"städtisches Gebiet";Hintergrund;23;16
+Sachsen;DESN024;Klingenthal;"städtisches Gebiet";Hintergrund;18;6
+Sachsen;DESN045;Zittau-Ost;"vorstädtisches Gebiet";Hintergrund;22;12
+Sachsen;DESN049;Carlsfeld;"ländlich abgelegen";Hintergrund;13;2
+Sachsen;DESN050;Hoyerswerda;"städtisches Gebiet";Hintergrund;22;18
+Sachsen;DESN051;Radebeul-Wahnsdorf;"ländlich stadtnah";Hintergrund;20;10
+Sachsen;DESN059;Leipzig-West;"vorstädtisches Gebiet";Hintergrund;20;6
+Sachsen;DESN074;Schwartenberg;"ländlich regional";Hintergrund;15;4
+Sachsen;DESN076;Collmberg;"ländlich abgelegen";Hintergrund;17;5
+Sachsen;DESN079;Niesky;"ländlich regional";Hintergrund;21;15
+Sachsen;DESN085;Dresden-HerzoginGarten;"städtisches Gebiet";Hintergrund;26;15
+Sachsen;DESN006;Borna;"städtisches Gebiet";Verkehr;24;13
+Sachsen;DESN020;Görlitz;"städtisches Gebiet";Verkehr;28;26
+Sachsen;DESN025;Leipzig-Mitte;"städtisches Gebiet";Verkehr;32;39
+Sachsen;DESN047;Zwickau;"städtisches Gebiet";Verkehr;22;10
+Sachsen;DESN060;Chemnitz-Nord;"städtisches Gebiet";Verkehr;23;12
+Sachsen;DESN061;Dresden-Nord;"städtisches Gebiet";Verkehr;28;17
+Sachsen;DESN075;Plauen-Süd;"städtisches Gebiet";Verkehr;24;18
+Sachsen;DESN077;"Leipzig Lützner Str.";"städtisches Gebiet";Verkehr;31;40
+Sachsen;DESN083;"Chemnitz-Leipziger Str.";"städtisches Gebiet";Verkehr;29;27
+Sachsen;DESN084;Dresden-Bergstr.;"städtisches Gebiet";Verkehr;31;27
+Sachsen-Anhalt;DEST002;Burg;"vorstädtisches Gebiet";Hintergrund;21;11
+Sachsen-Anhalt;DEST011;Wernigerode/Bahnhof;"städtisches Gebiet";Hintergrund;20;5
+Sachsen-Anhalt;DEST028;Zeitz;"städtisches Gebiet";Hintergrund;20;3
+Sachsen-Anhalt;DEST029;Bernburg;"vorstädtisches Gebiet";Hintergrund;23;16
+Sachsen-Anhalt;DEST063;Stendal;"städtisches Gebiet";Hintergrund;21;8
+Sachsen-Anhalt;DEST066;Wittenberg/Bahnstrasse;"städtisches Gebiet";Hintergrund;21;10
+Sachsen-Anhalt;DEST072;Halle/Ost;"vorstädtisches Gebiet";Hintergrund;22;4
+Sachsen-Anhalt;DEST089;Zartau/Waldstation;"ländlich regional";Hintergrund;17;1
+Sachsen-Anhalt;DEST098;"Unterharz / Friedrichsbrunn";"ländlich regional";Hintergrund;14;1
+Sachsen-Anhalt;DEST015;Bitterfeld/Wolfen;"vorstädtisches Gebiet";Industrie;23;7
+Sachsen-Anhalt;DEST068;Pouch;"ländlich stadtnah";Industrie;17;3
+Sachsen-Anhalt;DEST090;Leuna;"vorstädtisches Gebiet";Industrie;21;4
+Sachsen-Anhalt;DEST097;"Hettstedt Industrie";"vorstädtisches Gebiet";Industrie;19;3
+Sachsen-Anhalt;DEST057;Magdeburg/Südost;"städtisches Gebiet";Verkehr;21;5
+Sachsen-Anhalt;DEST075;"Halle/Merseburger Strasse";"städtisches Gebiet";Verkehr;25;17
+Sachsen-Anhalt;DEST076;Magdeburg/Damaschkeplatz;"städtisches Gebiet";Verkehr;26;16
+Sachsen-Anhalt;DEST081;Weißenfels/Promenade;"städtisches Gebiet";Verkehr;22;10
+Sachsen-Anhalt;DEST091;"Dessau Albrechtsplatz";"städtisches Gebiet";Verkehr;23;5
+Sachsen-Anhalt;DEST092;"Wittenberg/Dessauer Strasse";"städtisches Gebiet";Verkehr;29;28
+Sachsen-Anhalt;DEST095;Aschersleben;"städtisches Gebiet";Verkehr;28;40
+Sachsen-Anhalt;DEST099;Magdeburg/Reuterallee;"städtisches Gebiet";Verkehr;29;27
+Sachsen-Anhalt;DEST100;Wernigerode/Nöschenröder-Strasse;"städtisches Gebiet";Verkehr;24;16
+Sachsen-Anhalt;DEST101;Halberstadt/Friedenstrasse;"städtisches Gebiet";Verkehr;30;35
+Schleswig-Holstein;DESH008;Bornhöved;"ländlich regional";Hintergrund;17;4
+Schleswig-Holstein;DESH023;"Lübeck-St. Jürgen";"städtisches Gebiet";Hintergrund;23;13
+Schleswig-Holstein;DESH033;Kiel-Max-Planck-Str.;"städtisches Gebiet";Hintergrund;19;2
+Schleswig-Holstein;DESH011;Brunsbüttel;"ländlich regional";Industrie;20;5
+Schleswig-Holstein;DESH022;Flensburg;"städtisches Gebiet";Verkehr;22;6
+Schleswig-Holstein;DESH025;"Itzehoe Lindenstr.";"städtisches Gebiet";Verkehr;24;10
+Schleswig-Holstein;DESH026;"Lübeck Gr. Burgstr.";"städtisches Gebiet";Verkehr;19;4
+Schleswig-Holstein;DESH027;"Kiel-Bahnhofstr. Verk.";"städtisches Gebiet";Verkehr;24;11
+Schleswig-Holstein;DESH028;Ratzeburg;"städtisches Gebiet";Verkehr;23;12
+Schleswig-Holstein;DESH029;"Kiel - Theodor-Heuss-Ring";"städtisches Gebiet";Verkehr;22;4
+Schleswig-Holstein;DESH030;Norderstedt;"städtisches Gebiet";Verkehr;22;8
+Schleswig-Holstein;DESH031;Eutin-Elisabethstraße;"städtisches Gebiet";Verkehr;19;4
+Thüringen;DETH005;Saalfeld;"städtisches Gebiet";Hintergrund;22;9
+Thüringen;DETH009;"Gera Friedericistr.";"städtisches Gebiet";Hintergrund;23;14
+Thüringen;DETH011;"Altenburg Theaterplatz";"städtisches Gebiet";Hintergrund;22;8
+Thüringen;DETH013;"Eisenach Werneburgstr.";"städtisches Gebiet";Hintergrund;21;5
+Thüringen;DETH018;Nordhausen;"städtisches Gebiet";Hintergrund;23;7
+Thüringen;DETH020;"Erfurt Krämpferstr.";"städtisches Gebiet";Hintergrund;21;7
+Thüringen;DETH025;Meiningen;"städtisches Gebiet";Hintergrund;19;5
+Thüringen;DETH026;Dreißigacker;"ländlich regional";Hintergrund;16;2
+Thüringen;DETH027;Neuhaus;"ländlich abgelegen";Hintergrund;12;0
+Thüringen;DETH036;"Greiz Mollbergstr.";"städtisches Gebiet";Hintergrund;19;7
+Thüringen;DETH041;"Jena Dammstr.";"städtisches Gebiet";Hintergrund;21;7
+Thüringen;DETH042;Possen;"ländlich abgelegen";Hintergrund;14;1
+Thüringen;DETH060;Zella-Mehlis;"städtisches Gebiet";Hintergrund;20;5
+Thüringen;DETH061;Hummelshain;"ländlich abgelegen";Hintergrund;14;2
+Thüringen;DETH085;"Könitz Herthumstr.";"ländlich regional";Industrie;19;2
+Thüringen;DETH039;"Weimar Sophienstiftsplatz";"städtisches Gebiet";Verkehr;27;24
+Thüringen;DETH043;"Erfurt Bergstr.";"städtisches Gebiet";Verkehr;29;28
+Thüringen;DETH072;"Suhl F.-König-Str";"städtisches Gebiet";Verkehr;23;10
+Thüringen;DETH075;"Jena Westbahnhofstr.";"städtisches Gebiet";Verkehr;24;13
+Thüringen;DETH081;"Erfurt Heinrichstr";"städtisches Gebiet";Verkehr;29;26
+Thüringen;DETH082;"Jena Camburger Str.";"städtisches Gebiet";Verkehr;28;33
+Thüringen;DETH083;"Weimar Steubenstr.";"städtisches Gebiet";Verkehr;34;50
+Thüringen;DETH084;"Weimar K.-Liebknecht-Str.";"städtisches Gebiet";Verkehr;27;26
+Thüringen;DETH090;"Meiningen Leipziger Str.";"städtisches Gebiet";Verkehr;23;9
+UBA;DEUB001;Westerland;"ländliches Gebiet";Hintergrund;19;5
+UBA;DEUB004;Schauinsland;"ländlich regional";Hintergrund;9;3
+UBA;DEUB005;Waldhof;"ländliches Gebiet";Hintergrund;16;4
+UBA;DEUB028;Zingst;"ländliches Gebiet";Hintergrund;15;4
+UBA;DEUB029;Schmücke;"ländliches Gebiet";Hintergrund;10;1
+UBA;DEUB030;Neuglobsow;"ländlich regional";Hintergrund;14;0
+
+"* Nach § 20 bzw. § 21 der Richtlinie 2008/50/EG können Überschreitungen des PM₁₀-Tagesmittelgrenzwertes aufgrund von natürlichen Quellen bzw. Streusand oder -salz im Winterdienst abgezogen werden."
+
+"Quelle: Umweltbundesamt, https://www.umweltbundesamt.de/daten/luft/luftdaten/jahresbilanzen (Stand: 21.03.2012). Alle Uhrzeiten sind in der jeweils zum Messzeitpunkt gültigen Zeit (MEZ bzw. MESZ) angegeben."
