@@ -1,0 +1,505 @@
+{
+	"Baden-Württemberg": {
+		"1992": [
+			"cdu_csu",
+			"spd"
+		],
+		"1996": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2001": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2006": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2011": [
+			"grüne",
+			"spd"
+		],
+		"2016": [
+			"grüne",
+			"cdu_csu"
+		],
+		"2021": [
+			"grüne",
+			"cdu_csu"
+		]
+	},
+	"Bayern": {
+		"1990": [
+			"cdu_csu"
+		],
+		"1994": [
+			"cdu_csu"
+		],
+		"1998": [
+			"cdu_csu"
+		],
+		"2003": [
+			"cdu_csu"
+		],
+		"2008": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2013": [
+			"cdu_csu"
+		],
+		"2018": [
+			"cdu_csu",
+			"other"
+		]
+	},
+	"Berlin": {
+		"1990": [
+			"cdu_csu",
+			"spd"
+		],
+		"1995": [
+			"cdu_csu",
+			"spd"
+		],
+		"1999": [
+			"cdu_csu",
+			"spd"
+		],
+		"2001": [
+			"spd",
+			"linke"
+		],
+		"2006": [
+			"spd",
+			"linke"
+		],
+		"2011": [
+			"spd",
+			"cdu_csu"
+		],
+		"2016": [
+			"spd",
+			"grüne",
+			"linke"
+		],
+		"2021": [
+			"spd",
+			"grüne",
+			"linke"
+		]
+	},
+	"Brandenburg": {
+		"1990": [
+			"spd",
+			"fdp",
+			"grüne"
+		],
+		"1994": [
+			"spd"
+		],
+		"1999": [
+			"spd",
+			"cdu_csu"
+		],
+		"2002": [
+			"spd",
+			"cdu_csu"
+		],
+		"2004": [
+			"spd",
+			"cdu_csu"
+		],
+		"2009": [
+			"spd",
+			"linke"
+		],
+		"2013": [
+			"spd",
+			"linke"
+		],
+		"2014": [
+			"spd",
+			"linke"
+		],
+		"2019": [
+			"spd",
+			"cdu_csu",
+			"grüne"
+		]
+	},
+	"Bremen": {
+		"1991": [
+			"spd",
+			"fdp",
+			"grüne"
+		],
+		"1995": [
+			"spd",
+			"cdu_csu"
+		],
+		"1999": [
+			"spd",
+			"cdu_csu"
+		],
+		"2003": [
+			"spd",
+			"cdu_csu"
+		],
+		"2007": [
+			"spd",
+			"grüne"
+		],
+		"2011": [
+			"spd",
+			"grüne"
+		],
+		"2015": [
+			"spd",
+			"grüne"
+		],
+		"2019": [
+			"spd",
+			"grüne",
+			"linke"
+		]
+	},
+	"Hamburg": {
+		"1993": [
+			"spd"
+		],
+		"1997": [
+			"spd",
+			"cdu_csu"
+		],
+		"2001": [
+			"cdu_csu",
+			"fdp",
+			"other"
+		],
+		"2004": [
+			"cdu_csu"
+		],
+		"2008": [
+			"cdu_csu",
+			"grüne"
+		],
+		"2011": [
+			"spd"
+		],
+		"2015": [
+			"spd",
+			"grüne"
+		],
+		"2020": [
+			"spd",
+			"grüne"
+		]
+	},
+	"Hessen": {
+		"1991": [
+			"spd",
+			"grüne"
+		],
+		"1995": [
+			"spd",
+			"grüne"
+		],
+		"1999": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2003": [
+			"cdu_csu"
+		],
+		"2008": [
+			"cdu_csu"
+		],
+		"2009": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2013": [
+			"cdu_csu",
+			"grüne"
+		],
+		"2018": [
+			"cdu_csu",
+			"grüne"
+		]
+	},
+	"Mecklenburg-Vorpommern": {
+		"1990": [
+			"cdu_csu",
+			"fdp"
+		],
+		"1994": [
+			"cdu_csu",
+			"spd"
+		],
+		"1998": [
+			"spd",
+			"other"
+		],
+		"2002": [
+			"spd",
+			"other"
+		],
+		"2006": [
+			"cdu_csu",
+			"spd"
+		],
+		"2011": [
+			"spd",
+			"cdu_csu"
+		],
+		"2016": [
+			"spd",
+			"cdu_csu"
+		],
+		"2021": [
+			"spd",
+			"linke"
+		]
+	},
+	"Niedersachsen": {
+		"1990": [
+			"spd",
+			"grüne"
+		],
+		"1994": [
+			"spd"
+		],
+		"1998": [
+			"spd"
+		],
+		"2003": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2008": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2013": [
+			"spd",
+			"grüne"
+		],
+		"2017": [
+			"spd",
+			"cdu_csu"
+		]
+	},
+	"Nordrhein-Westfalen": {
+		"1990": [
+			"spd"
+		],
+		"1995": [
+			"spd",
+			"grüne"
+		],
+		"2000": [
+			"spd",
+			"grüne"
+		],
+		"2005": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2010": [
+			"spd",
+			"grüne"
+		],
+		"2012": [
+			"spd",
+			"grüne"
+		],
+		"2017": [
+			"cdu_csu",
+			"fdp"
+		]
+	},
+	"Rheinland-Pfalz": {
+		"1991": [
+			"spd",
+			"fdp"
+		],
+		"1996": [
+			"spd",
+			"fdp"
+		],
+		"2001": [
+			"spd",
+			"fdp"
+		],
+		"2006": [
+			"spd"
+		],
+		"2011": [
+			"spd",
+			"grüne"
+		],
+		"2016": [
+			"spd",
+			"grüne",
+			"fdp"
+		],
+		"2021": [
+			"spd",
+			"grüne",
+			"fdp"
+		]
+	},
+	"Saarland": {
+		"1990": [
+			"spd"
+		],
+		"1994": [
+			"spd"
+		],
+		"1999": [
+			"cdu_csu"
+		],
+		"2004": [
+			"cdu_csu"
+		],
+		"2009": [
+			"cdu_csu",
+			"grüne",
+			"fdp"
+		],
+		"2012": [
+			"cdu_csu",
+			"spd"
+		],
+		"2017": [
+			"cdu_csu",
+			"spd"
+		]
+	},
+	"Sachsen": {
+		"1990": [
+			"cdu_csu"
+		],
+		"1994": [
+			"cdu_csu"
+		],
+		"1999": [
+			"cdu_csu"
+		],
+		"2004": [
+			"cdu_csu",
+			"spd"
+		],
+		"2009": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2014": [
+			"cdu_csu",
+			"spd"
+		],
+		"2019": [
+			"cdu_csu",
+			"grüne",
+			"spd"
+		]
+	},
+	"Sachsen-Anhalt": {
+		"1990": [
+			"cdu_csu",
+			"fdp"
+		],
+		"1994": [
+			"spd",
+			"grüne"
+		],
+		"1998": [
+			"spd",
+			"grüne"
+		],
+		"2002": [
+			"cdu_csu"
+		],
+		"2006": [
+			"cdu_csu",
+			"spd"
+		],
+		"2011": [
+			"spd",
+			"cdu_csu"
+		],
+		"2016": [
+			"cdu_csu",
+			"spd",
+			"grüne"
+		],
+		"2021": [
+			"cdu_csu",
+			"spd",
+			"fdp"
+		]
+	},
+	"Schleswig-Holstein": {
+		"1992": [
+			"spd"
+		],
+		"1996": [
+			"spd",
+			"grüne"
+		],
+		"2000": [
+			"spd",
+			"grüne"
+		],
+		"2005": [
+			"cdu_csu",
+			"spd"
+		],
+		"2009": [
+			"cdu_csu",
+			"fdp"
+		],
+		"2012": [
+			"spd",
+			"grüne",
+			"other"
+		],
+		"2017": [
+			"cdu_csu",
+			"grüne",
+			"fdp"
+		]
+	},
+	"Thüringen": {
+		"1990": [
+			"cdu_csu",
+			"fdp"
+		],
+		"1994": [
+			"cdu_csu",
+			"spd"
+		],
+		"1999": [
+			"cdu_csu"
+		],
+		"2004": [
+			"cdu_csu"
+		],
+		"2009": [
+			"cdu_csu",
+			"spd"
+		],
+		"2014": [
+			"linke",
+			"spd",
+			"grüne"
+		],
+		"2019": [
+			"linke",
+			"spd",
+			"grüne"
+		]
+	}
+}
