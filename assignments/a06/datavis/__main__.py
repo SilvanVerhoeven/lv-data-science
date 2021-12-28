@@ -21,20 +21,32 @@ def parse_arguments():
         help="Directory for pre-processing results.",
         default='data/processed')
 
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers()    
+
+    DEFAULTS = [
+        'output/absolute',
+        'output/change'
+    ]
+
+    # all
+    change_parser = subparsers.add_parser('all', help="Build all available charts at once.")
+    change_parser.add_argument('-o', '--output',
+        help="Directory for build results.",
+        default=DEFAULTS)
+    change_parser.set_defaults(func=build_all_charts)
 
     # change
     change_parser = subparsers.add_parser('change', help="Build charts that display the change of air pollution relative to the previous value.")
     change_parser.add_argument('-o', '--output',
         help="Directory for build results.",
-        default='output/change')
+        default=DEFAULTS[1])
     change_parser.set_defaults(func=build_change_charts)
 
     # absolute
     change_parser = subparsers.add_parser('absolute', help="Build charts that display the absolute of air pollution data.")
     change_parser.add_argument('-o', '--output',
         help="Directory for build results.",
-        default='output/absolute')
+        default=DEFAULTS[0])
     change_parser.set_defaults(func=build_absolute_charts)
 
     return parser.parse_args()
@@ -44,7 +56,6 @@ def build_average_charts(data_file_path, output_dir, chart, callback_title, call
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    print("Creating charts...")
     output_basename = os.path.join(output_dir, 'pollution.svg')
     with open(data_file_path) as datafile:
         data = json.load(datafile)
@@ -76,6 +87,7 @@ def build_average_charts(data_file_path, output_dir, chart, callback_title, call
 
 
 def build_absolute_charts(data_file_path, output_dir):
+    print("Creating absolute charts...")
     chart = pygal.Bar()
     build_average_charts(
         data_file_path,
@@ -87,6 +99,7 @@ def build_absolute_charts(data_file_path, output_dir):
 
 
 def build_change_charts(data_file_path, output_dir):
+    print("Creating change charts...")
     chart = pygal.Bar()
     build_average_charts(
         data_file_path,
@@ -95,6 +108,11 @@ def build_change_charts(data_file_path, output_dir):
         lambda state: "Average change of FS_10 values in "+state,
         lambda current_value, prev_value: current_value - prev_value)
     return output_dir
+
+
+def build_all_charts(data_file_path, output_dirs):
+    build_absolute_charts(data_file_path, output_dirs[0])
+    build_change_charts(data_file_path, output_dirs[1])
 
 
 def main():
