@@ -1,1 +1,4 @@
-assignments/a06/output
+__pycache__/
+
+/assignments/a06/output/
+/assignments/a06/data/processed/
