@@ -24,16 +24,23 @@ def parse_arguments():
     subparsers = parser.add_subparsers()
 
     # change
-    change_parser = subparsers.add_parser('change', help="Build charts that display the change of air pollution relative to the previous value")
+    change_parser = subparsers.add_parser('change', help="Build charts that display the change of air pollution relative to the previous value.")
     change_parser.add_argument('-o', '--output',
         help="Directory for build results.",
         default='output/change')
     change_parser.set_defaults(func=build_change_charts)
 
+    # absolute
+    change_parser = subparsers.add_parser('absolute', help="Build charts that display the absolute of air pollution data.")
+    change_parser.add_argument('-o', '--output',
+        help="Directory for build results.",
+        default='output/absolute')
+    change_parser.set_defaults(func=build_absolute_charts)
+
     return parser.parse_args()
 
 
-def build_change_charts(data_file_path, output_dir):
+def build_average_charts(data_file_path, output_dir, chart, callback_title, callback_new_value):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -42,9 +49,8 @@ def build_change_charts(data_file_path, output_dir):
     with open(data_file_path) as datafile:
         data = json.load(datafile)
         for state in data.keys():
-            bar_chart = pygal.Bar()
-            bar_chart.title = "Average change of FS_10 values in "+state
-            bar_chart.x_labels = sorted(data[state].keys())[1:]
+            chart.title = callback_title(state)
+            chart.x_labels = sorted(data[state].keys())[1:]
             
             last_year_pollution = None
             graph_data = []
@@ -56,17 +62,38 @@ def build_change_charts(data_file_path, output_dir):
                 year_state_average = pollution.get('year_average', 0) / pollution.get('year_average_counter', 1)
                 if last_year_pollution is not None:
                     graph_data.append({
-                        'value': year_state_average - last_year_pollution,
-                        'color': get_party_color(last_election)
-                    })
+                        'value': callback_new_value(year_state_average, last_year_pollution),
+                        'color': get_party_color(last_election)})
                 last_year_pollution = year_state_average
             
-            bar_chart.add('FM_10', graph_data)
-            bar_chart.render_to_file(get_filename(output_basename, '_'+state))
+            chart.add('FM_10', graph_data)
+            chart.render_to_file(get_filename(output_basename, '_'+state))
 
     print("Charts created. Files are available under:\n{}".format(
         os.path.abspath(get_filename(output_basename, '_STATE'))))
     
+    return output_dir
+
+
+def build_absolute_charts(data_file_path, output_dir):
+    chart = pygal.Bar()
+    build_average_charts(
+        data_file_path,
+        output_dir,
+        chart,
+        lambda state: "Average of FS_10 values in "+state,
+        lambda current_value, prev_value: current_value)
+    return output_dir
+
+
+def build_change_charts(data_file_path, output_dir):
+    chart = pygal.Bar()
+    build_average_charts(
+        data_file_path,
+        output_dir,
+        chart,
+        lambda state: "Average change of FS_10 values in "+state,
+        lambda current_value, prev_value: current_value - prev_value)
     return output_dir
 
 
@@ -77,8 +104,7 @@ def main():
         args.pollution_data_dir,
         args.election_data_dir,
         args.government_data_file,
-        args.processing_output
-    )
+        args.processing_output)
 
     args.func(data_file_path, args.output)
 
