@@ -78,37 +78,47 @@ def get_state(str):
 
 ### Party handling ##########
 
-def is_biggest_in_government(party, election):
+def is_leading_in_government(party, election):
     if election == {}:
         return False
     for gov_party in election.get('government', []):
         if party not in election:
-            return party == election['government'][0]  # probably biggest party
+            return party == election['government'][0]  # probably leading party
         if election.get(party, 0) < election.get(gov_party, 0):
             return False
     return True
 
 
-def get_party_color(part_name, opacity=1):
-    color = 'rgba(100, 100, 100, {})'
+def get_party_name(party):
+    colors = {
+        'cdu_csu': 'CDU/CSU',
+        'spd': 'SPD',
+        'grüne': 'Die Grünen',
+        'fdp': 'FDP',
+        'linke': 'DIE LINKE',
+        'afd': 'AfD'
+    }
 
-    if part_name == 'cdu_csu':
-        color = 'rgba(0, 0, 0, {})'
-    elif part_name == 'spd':
-        color = 'rgba(255, 0, 0, {})'
-    elif part_name == 'grüne':
-        color = 'rgba(50, 200, 0, {})'
-    elif part_name == 'fdp':
-        color = 'rgba(255, 240, 0, {})'
-    elif part_name == 'linke':
-        color = 'rgba(200, 0, 200, {})'
-    elif part_name == 'afd':
-        color = 'rgba(0, 150, 255, {})'
-
-    return color.format(opacity)
+    return colors.get(party, 'Other')
 
 
-def get_party_color_by_election(election_data):
+def get_party_color(party, opacity=1):
+    other_color = 'rgba(100, 100, 100, {})'
+
+    colors = {
+        'cdu_csu': 'rgba(0, 0, 0, {})',
+        'spd': 'rgba(255, 0, 0, {})',
+        'grüne': 'rgba(50, 200, 0, {})',
+        'fdp': 'rgba(255, 240, 0, {})',
+        'linke': 'rgba(200, 0, 200, {})',
+        'afd': 'rgba(0, 150, 255, {})',
+        'nation': 'rgba(65, 140, 245, {})'
+    }
+
+    return colors.get(party, other_color).format(opacity)
+
+
+def get_leading_party(election_data):
     gov_parties = []
     party = election_data['government'][0]
     if party in election_data:
@@ -116,7 +126,7 @@ def get_party_color_by_election(election_data):
             gov_parties.append((party, election_data[party]))
         party = sorted(gov_parties, key=lambda ps: ps[1], reverse=True)[0][0]
     
-    return get_party_color(party)
+    return party
 
 
 def sort_by_popularity(parties):

@@ -1,5 +1,6 @@
+from pygal import colors
 from datavis.preprocess import handle_pre_processing
-from datavis.utils import get_filename, get_party_color, get_party_color_by_election, is_biggest_in_government, sort_by_popularity
+from datavis.utils import get_filename, get_leading_party, get_party_color, get_party_name, is_leading_in_government, sort_by_popularity
 import argparse
 import json
 import os
@@ -133,23 +134,42 @@ def build_average_charts(data_file_path, output_dir, show_average, callback_buil
             chart.title = callback_title(state)
             chart.x_labels = sorted(data[state].keys())[1:]
             
+            year_counter = -1
             last_year_pollution = None
-            graph_data = []
+            graph_data = {}
             last_election = {}
+            previous_leading_party = None
             for dataset in data[state].values():
                 pollution = dataset['pollution']
                 if not dataset['election'] == {}:
                     last_election = dataset['election']
                 year_state_average = pollution.get('year_average', 0) / pollution.get('year_average_counter', 1)
                 if last_year_pollution is not None:
-                    graph_data.append({
-                        'value': callback_new_value(year_state_average, last_year_pollution),
-                        'color': get_party_color_by_election(last_election)})
+                    leading_party = get_leading_party(last_election)
+                    if leading_party not in graph_data:
+                        graph_data[leading_party] = [None] * year_counter
+                    year_value = callback_new_value(year_state_average, last_year_pollution)
+                    graph_data[leading_party].append(year_value)
+                    has_leading_party_changed = not leading_party == previous_leading_party and previous_leading_party is not None
+                    for party in graph_data.keys():
+                        if party == leading_party:
+                            continue
+                        if has_leading_party_changed:
+                            graph_data[previous_leading_party].append(year_value)
+                        else:
+                            graph_data[party].append(None)
+                    previous_leading_party = leading_party
                 last_year_pollution = year_state_average
+                year_counter += 1
             
-            chart.add(state, graph_data)
+            party_colors = []
+            for party, values in graph_data.items():
+                party_colors.append(get_party_color(party))
+                chart.add('{} {}'.format(get_party_name(party), state), values, allow_interruptions=True)
             if show_average:
-                chart.add('Nation', [ds['year_average'] for ds in nation_graph.values()][1:])
+                party_colors.append(get_party_color('nation'))
+                chart.add('Nation Average', [ds['year_average'] for ds in nation_graph.values()][1:])
+            chart.style = Style(colors=party_colors)
             chart.render_to_file(get_filename(output_basename, '_'+state))
 
     print("Charts created. Files are available under:\n{}".format(
@@ -160,15 +180,17 @@ def build_average_charts(data_file_path, output_dir, show_average, callback_buil
 
 def build_absolute_charts(data_file_path, output_dir, **kwargs):
     def build_chart():
-        return pygal.Bar()
+        chart = pygal.Line(dots_size=1)
+        chart.y_title = "Yearly change of PM10 concentration in µg/m³"
+        return chart
 
     print("Creating absolute charts...")
     build_average_charts(
         data_file_path,
         output_dir,
-        kwargs['show_average'],
+        kwargs['average'],
         build_chart,
-        lambda state: "Average of FS_10 values in "+state,
+        lambda state: "Average of PM10 values in "+state,
         lambda current_value, prev_value: current_value,
         get_nation_median_air_pollution)
     return output_dir
@@ -176,15 +198,17 @@ def build_absolute_charts(data_file_path, output_dir, **kwargs):
 
 def build_change_charts(data_file_path, output_dir, **kwargs):
     def build_chart():
-        return pygal.Bar()
+        chart = pygal.Line(dots_size=1)
+        chart.y_title = "Yearly change of PM10 concentration in µg/m³"
+        return chart
     
     print("Creating change charts...")
     build_average_charts(
         data_file_path,
         output_dir,
-        kwargs['show_average'],
+        kwargs['average'],
         build_chart,
-        lambda state: "Average change of FS_10 values in "+state,
+        lambda state: "Average change of PM10 values in "+state,
         lambda current_value, prev_value: current_value - prev_value,
         get_nation_median_air_pollution_change)
     return output_dir
@@ -194,8 +218,8 @@ def build_party_impact_chart(data_file_path, output_dir, **kwargs):
     def build_chart():
         chart = pygal.Box()
         chart.title = "Parties' Impact on Air Pollution"
-        chart.x_title = "Nationwide yearly average changes of air pollution values in \
-            years in which the respective party is part of the government (alternative row: in which party is the biggest in government)."  # abuse x axis as description
+        chart.x_title = "Nation-wide yearly average changes of air pollution values in \
+            years in which the respective party is part of the government (alternative row: in which party is leading the government)."  # abuse x axis as description
         chart.y_title = "Yearly change of PM10 concentration in µg/m³"
         return chart
     
@@ -206,7 +230,7 @@ def build_party_impact_chart(data_file_path, output_dir, **kwargs):
     
     party_data = {
         'part': {},
-        'biggest' : {}
+        'leading' : {}
     }
 
     # aggregate values per party
@@ -228,8 +252,8 @@ def build_party_impact_chart(data_file_path, output_dir, **kwargs):
                     election = election_candidate
 
                 for party in election.get('government', []):                    
-                    if is_biggest_in_government(party, election):
-                        party_data['biggest'][party] = party_data['biggest'].get(party, []) + [relative_pollution_change]
+                    if is_leading_in_government(party, election):
+                        party_data['leading'][party] = party_data['leading'].get(party, []) + [relative_pollution_change]
                     party_data['part'][party] = party_data['part'].get(party, []) + [relative_pollution_change]
 
                 last_year = year
@@ -237,8 +261,8 @@ def build_party_impact_chart(data_file_path, output_dir, **kwargs):
         chart = build_chart()
         party_colors = []
         for party, values in sort_by_popularity(party_data['part']):
-            chart.add(party, [{'value': value, 'label': '{} years in government'.format(len(values))} for value in values])
-            chart.add(party + ' (biggest)', [{'value': value, 'label': '{} years in government'.format(len(party_data['biggest'].get(party, [])))} for value in party_data['biggest'].get(party, [])])
+            chart.add(get_party_name(party), [{'value': value, 'label': '{} years in government'.format(len(values))} for value in values])
+            chart.add(get_party_name(party) + ' (leading)', [{'value': value, 'label': '{} years in government'.format(len(party_data['leading'].get(party, [])))} for value in party_data['leading'].get(party, [])])
             party_colors.append(get_party_color(party))
             party_colors.append(get_party_color(party, 0.4))
         chart.style = Style(colors=party_colors)
@@ -251,9 +275,9 @@ def build_party_impact_chart(data_file_path, output_dir, **kwargs):
     return output_dir
 
 
-def build_all_charts(data_file_path, output_dirs, show_average):
-    build_absolute_charts(data_file_path, output_dirs[0], show_average)
-    build_change_charts(data_file_path, output_dirs[1], show_average)
+def build_all_charts(data_file_path, output_dirs, **kwargs):
+    build_absolute_charts(data_file_path, output_dirs[0], **kwargs)
+    build_change_charts(data_file_path, output_dirs[1], **kwargs)
     build_party_impact_chart(data_file_path, output_dirs[2])
 
 
