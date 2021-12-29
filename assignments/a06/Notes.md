@@ -1,10 +1,12 @@
-# Combining Air Pollution Data with Parties in the Government
+# Combining Air Pollution Data with Government Parties
 
 ## Available Data
 
-I am combining historic data on air pollution in German states (concentration of [particulates PM10](https://en.wikipedia.org/wiki/Particulates) in µg/m³) with election data on the state governments.
+I am combining historic data on air pollution in German states (concentration of [particulates PM10](https://en.wikipedia.org/wiki/Particulates) in µg/m³) with state governments election data.
 
-Using the yearly reports on air pollution by the Umweltbundesamt of Germany, the PM10 concentration data was fetched as CSV files from the [Umweltbundesamt of Germany website](https://www.umweltbundesamt.de/en/data/air/air-data/annual-tabulation/eJxrWpScv9BwUWXqEiMDIwMAMK0FsQ==). The files had to be downloaded per year by selecting from a drop down menu, thus I downloaded them manually given the small number of downloads.  
+### Air Pollution
+
+Using the yearly reports on air pollution by the Umweltbundesamt of Germany, the PM10 concentration data was fetched as CSV files from the [Umweltbundesamt of Germany website](https://www.umweltbundesamt.de/en/data/air/air-data/annual-tabulation/eJxrWpScv9BwUWXqEiMDIwMAMK0FsQ==). The files had to be downloaded individually per year by selecting from a drop down menu. Due to this procedure rather difficult to automate and given the small number of downloads I downloaded the files manually.  
 Each CSV file contained the
 
 - yearly average of PM10 in µg/m³,
@@ -13,15 +15,20 @@ Each CSV file contained the
 
 for every measuring station in Germany for every year from 2002 to 2020. A measuring station is described with the state, a station code, a station name, the kind of the surrounding of the station (e.g. urban area, sub-urban area, ...) and kind of station (e.g. industry, traffic, ...).
 
-The election data was a two-fold operation.  
-The historic election results for each state in Germany (down to every vote for each party) could be downloaded from the [regional statistics database of the nation and state government](https://www.regionalstatistik.de/genesis/online?operation=themes&levelindex=0&levelid=1640600409682&code=14#abreadcrumb), Statistische Ämter des Bundes und der Länder. This required a few clicks per state file and could have been automated, but given the small number of files to download, it was quicker to download them manually.  
-The data was available in CSV files. Each file contained the election results of all state elections within one German state as far back as the 1990s, down to the individual district result, with votes for the major parties CDU/CSU, SPD, Grüne, FDP, Linke and others.  
-These files alone do not provide data on which parties eventually make up the government of the respective state. Unfortunately, I could not find such a database. Hence, I had to retrieve the data from Wikipedia.  
-Wikipedia offers in-depth articles for every German state election. Unfortunately, their structure is very different. Some provide tables with the possible coalitions, highlighting the realized one, some state the coalition in continuous text in the first paragraph of the article, some in the a dedicted section somewhere else, some only provide graphics. It is impossible to quickly and easily parse this information from the articles. This is why I had to manually read through many articles and write out the parties making up the respective governments into a JSON file, structured by state and year.
+### Election and Government Data
+
+The election data was a two-fold operation.
+
+The historic election results for each state in Germany (down to every vote for each party) could be downloaded from the [regional statistics database of the nation and state governments](https://www.regionalstatistik.de/genesis/online?operation=themes&levelindex=0&levelid=1640600409682&code=14#abreadcrumb), Statistische Ämter des Bundes und der Länder. This required a few clicks per state file and could have been automated, but given the small number of files to download, it was quicker to download them manually.  
+The data was available as CSV files among others, but not designed to be loaded as such. It had no proper header and contained non-CSV-conform metadata at the top and bottom. Between, was CSV-parseable data.  
+Each file contained the election results of all state elections within one German state as far back as the 1990s, down to the individual district result, with votes for the major parties CDU/CSU, SPD, Grüne, FDP, Linke and others.  
+
+These files alone do not provide information on which parties eventually make up the government of the respective state. Unfortunately, I could not find such a database for free. Hence, I had to retrieve the data from Wikipedia.  
+Wikipedia offers in-depth articles for every German state election. Unfortunately, their structure is very different. Some provide tables with the possible coalitions, highlighting the realized one, some state the coalition in continuous text in the first paragraph of the article, some in a dedicted section somewhere else, some only provide graphics. It is impossible to quickly and easily parse this information from the articles. This is why I had to manually read through many articles and write out the parties making up the respective governments into a JSON file, structured by state and year.
 
 ### Evaluation
 
-The mentioned data files were processed into a final JSON file, that had the following strcuture:
+The mentioned data files were processed into a final JSON file, that had the following structure:
 
 ```json
 {
@@ -97,6 +104,8 @@ Our aim is to efficiently evaluate the performance of parties concerning air pol
 ### Impact on Air Pollution
 
 *As found in `output/misc/pollution_impact_all_parties.svg`.*
+
+You may want to open this chart type in a browser, as it can show more details on mouse hover.
 
 This last chart type shows the impact of a party on air pollution, measured in all states and over all available years.
 
