@@ -78,24 +78,50 @@ def get_state(str):
 
 ### Party handling ##########
 
-def get_party_color(election_data):
+def get_party_color(part_name):
+    color = 'rgb(100, 100, 100)'
+
+    if part_name == 'cdu_csu':
+        color = 'rgb(0, 0, 0)'
+    elif part_name == 'spd':
+        color = 'rgb(255, 0, 0)'
+    elif part_name == 'grüne':
+        color = 'rgb(50, 200, 0)'
+    elif part_name == 'fdp':
+        color = 'rgb(255, 240, 0)'
+    elif part_name == 'linke':
+        color = 'rgb(200, 0, 200)'
+    elif part_name == 'afd':
+        color = 'rgb(0, 150, 255)'
+
+    return color
+
+
+def get_party_color_by_election(election_data):
     gov_parties = []
     party = election_data['government'][0]
     if party in election_data:
         for party in election_data['government']:
             gov_parties.append((party, election_data[party]))
         party = sorted(gov_parties, key=lambda ps: ps[1], reverse=True)[0][0]
-    color = 'rgb(100, 100, 100)'
-    if party == 'cdu_csu':
-        color = 'rgb(0, 0, 0)'
-    elif party == 'spd':
-        color = 'rgb(255, 0, 0)'
-    elif party == 'grüne':
-        color = 'rgb(50, 200, 0)'
-    elif party == 'fdp':
-        color = 'rgb(255, 255, 0)'
-    elif party == 'linke':
-        color = 'rgb(200, 0, 200)'
-    elif party == 'afd':
-        color = 'rgb(0, 150, 255)'
-    return color
+    
+    return get_party_color(party)
+
+
+def sort_by_popularity(parties):
+    order = {
+        'cdu_csu': 0,
+        'spd': 1,
+        'grüne': 2,
+        'fdp': 3,
+        'linke': 4,
+        'other': 5,
+    }
+    sorted_parties = [None] * len(order.keys())
+    for party, value in parties.items():
+        party_index = order.get(party, None)
+        if party_index is not None:
+            sorted_parties[party_index] = (party, value)
+        else:
+            sorted_parties.append((party, value))
+    return [item for item in sorted_parties if item is not None]
