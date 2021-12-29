@@ -21,7 +21,7 @@ def parse_arguments():
         help="Directory for pre-processing results.",
         default='data/processed')
 
-    subparsers = parser.add_subparsers()    
+    subparsers = parser.add_subparsers()
 
     DEFAULTS = [
         'output/absolute',
@@ -29,11 +29,11 @@ def parse_arguments():
     ]
 
     # all
-    change_parser = subparsers.add_parser('all', help="Build all available charts at once.")
-    change_parser.add_argument('-o', '--output',
+    all_parser = subparsers.add_parser('all', help="Build all available charts at once.")
+    all_parser.add_argument('-o', '--output',
         help="Directory for build results.",
         default=DEFAULTS)
-    change_parser.set_defaults(func=build_all_charts)
+    all_parser.set_defaults(func=build_all_charts)
 
     # change
     change_parser = subparsers.add_parser('change', help="Build charts that display the change of air pollution relative to the previous value.")
@@ -43,11 +43,11 @@ def parse_arguments():
     change_parser.set_defaults(func=build_change_charts)
 
     # absolute
-    change_parser = subparsers.add_parser('absolute', help="Build charts that display the absolute of air pollution data.")
-    change_parser.add_argument('-o', '--output',
+    absolute_parser = subparsers.add_parser('absolute', help="Build charts that display the absolute of air pollution data.")
+    absolute_parser.add_argument('-o', '--output',
         help="Directory for build results.",
         default=DEFAULTS[0])
-    change_parser.set_defaults(func=build_absolute_charts)
+    absolute_parser.set_defaults(func=build_absolute_charts)
 
     return parser.parse_args()
 
