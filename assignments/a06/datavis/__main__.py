@@ -1,5 +1,5 @@
 from datavis.preprocess import handle_pre_processing
-from datavis.utils import get_filename, get_party_color, get_party_color_by_election, sort_by_popularity
+from datavis.utils import get_filename, get_party_color, get_party_color_by_election, is_biggest_in_government, sort_by_popularity
 import argparse
 import json
 import os
@@ -195,7 +195,7 @@ def build_party_impact_chart(data_file_path, output_dir, **kwargs):
         chart = pygal.Box()
         chart.title = "Parties' Impact on Air Pollution"
         chart.x_title = "Nationwide yearly average changes of air pollution values in \
-            years in which the respective part is part of the government."  # abuse x axis as description
+            years in which the respective party is part of the government (alternative row: in which party is the biggest in government)."  # abuse x axis as description
         chart.y_title = "Yearly change of PM10 concentration in µg/m³"
         return chart
     
@@ -204,30 +204,43 @@ def build_party_impact_chart(data_file_path, output_dir, **kwargs):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     
-    party_data = {}
+    party_data = {
+        'part': {},
+        'biggest' : {}
+    }
 
     # aggregate values per party
     with open(data_file_path) as jsonfile:
         data = json.load(jsonfile)
         for state in data:
-            government = []
             last_year = min(data[state].keys())
-            for year in data[state]:
-                government = data[state][year]['election'].get('government', government)
-                for party in government:
-                    dataset = data[state][year]['pollution']
-                    prev_dataset = data[state][last_year]['pollution']
-                    present_data = party_data.get(party, [])
-                    present_data.append(
-                        (dataset.get('year_average', 0) - prev_dataset.get('year_average', 0)) / 
-                            dataset.get('year_average_counter', 0))
-                    party_data[party] = present_data
+            election = {}
+            for year in data[state]:                    
+                dataset = data[state][year]['pollution']
+                prev_dataset = data[state][last_year]['pollution']
+                relative_pollution_change = dataset.get('year_average', 0) / dataset.get('year_average_counter', 1) - \
+                    prev_dataset.get('year_average', 0) / prev_dataset.get('year_average_counter', 1)
+                if abs(relative_pollution_change) > 50:
+                    print(state, year, relative_pollution_change)
+                
+                election_candidate = data[state][year].get('election', {})
+                if not election_candidate == {}:
+                    election = election_candidate
+
+                for party in election.get('government', []):                    
+                    if is_biggest_in_government(party, election):
+                        party_data['biggest'][party] = party_data['biggest'].get(party, []) + [relative_pollution_change]
+                    party_data['part'][party] = party_data['part'].get(party, []) + [relative_pollution_change]
+
+                last_year = year
         
         chart = build_chart()
         party_colors = []
-        for party, values in sort_by_popularity(party_data):
-            chart.add(party, values)
+        for party, values in sort_by_popularity(party_data['part']):
+            chart.add(party, [{'value': value, 'label': '{} years in government'.format(len(values))} for value in values])
+            chart.add(party + ' (biggest)', [{'value': value, 'label': '{} years in government'.format(len(party_data['biggest'].get(party, [])))} for value in party_data['biggest'].get(party, [])])
             party_colors.append(get_party_color(party))
+            party_colors.append(get_party_color(party, 0.4))
         chart.style = Style(colors=party_colors)
     
     output_file_path = os.path.join(output_dir, 'pollution_impact_all_parties.svg')

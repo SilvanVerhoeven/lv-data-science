@@ -78,23 +78,34 @@ def get_state(str):
 
 ### Party handling ##########
 
-def get_party_color(part_name):
-    color = 'rgb(100, 100, 100)'
+def is_biggest_in_government(party, election):
+    if election == {}:
+        return False
+    for gov_party in election.get('government', []):
+        if party not in election:
+            return party == election['government'][0]  # probably biggest party
+        if election.get(party, 0) < election.get(gov_party, 0):
+            return False
+    return True
+
+
+def get_party_color(part_name, opacity=1):
+    color = 'rgba(100, 100, 100, {})'
 
     if part_name == 'cdu_csu':
-        color = 'rgb(0, 0, 0)'
+        color = 'rgba(0, 0, 0, {})'
     elif part_name == 'spd':
-        color = 'rgb(255, 0, 0)'
+        color = 'rgba(255, 0, 0, {})'
     elif part_name == 'grüne':
-        color = 'rgb(50, 200, 0)'
+        color = 'rgba(50, 200, 0, {})'
     elif part_name == 'fdp':
-        color = 'rgb(255, 240, 0)'
+        color = 'rgba(255, 240, 0, {})'
     elif part_name == 'linke':
-        color = 'rgb(200, 0, 200)'
+        color = 'rgba(200, 0, 200, {})'
     elif part_name == 'afd':
-        color = 'rgb(0, 150, 255)'
+        color = 'rgba(0, 150, 255, {})'
 
-    return color
+    return color.format(opacity)
 
 
 def get_party_color_by_election(election_data):
