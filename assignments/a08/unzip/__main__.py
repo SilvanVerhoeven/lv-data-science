@@ -1,6 +1,7 @@
 import argparse
 import os
 import zipfile
+from tqdm import tqdm
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -9,7 +10,6 @@ def parse_arguments():
         metavar="zip-dir",
         help="URL to the folder containing all zip files to decode.")
     parser.add_argument('-o', '--output-dir',
-        dest="output_dir",
         help="Path to output directory of decoded data. Inside zip file folder by default.",
         default="")
     parser.add_argument('-r', '--recursive',
@@ -34,7 +34,7 @@ def unzip_dir(zip_dir, output_dir):
         if os.path.isfile(os.path.join(zip_dir, file)) and
         os.path.splitext(file)[1] == '.zip']
 
-    for zip_file_name in zip_files:
+    for zip_file_name in tqdm(zip_files):
         output_zip_dir = os.path.join(output_dir, os.path.splitext(zip_file_name)[0])
         zip_file_path = os.path.join(zip_dir, zip_file_name)
         
@@ -51,7 +51,7 @@ def unzip():
     if not args.recursive:
         unzip_dir(args.zip_dir, args.output_dir or args.zip_dir)
     else:
-        for dir_path, _, _ in os.walk(args.zip_dir, topdown=False):
+        for dir_path, _, _ in tqdm(os.walk(args.zip_dir, topdown=False)):
             output_dir = args.output_dir or dir_path
             unzip_dir(dir_path, output_dir)
 
