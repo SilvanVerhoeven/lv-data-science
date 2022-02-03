@@ -1,5 +1,4 @@
 import argparse
-from fileinput import filename
 import os
 import pandas as pd
 import re
@@ -15,6 +14,7 @@ CONFIG = {
 FILENAME_FORMATS = {
     'CLIMATE_DATA': 'produkt_[a-z]{2}_stunde_(\d{8}_\d{8})?_(\d*).txt',
     'LOCATION_DATA': 'Metadaten_Geographie_(\d*).txt',
+    'PROCESSED_LOCATION_DATA': 'processed_(\d*)_l.csv',
 }
 
 
@@ -33,6 +33,9 @@ def parse_arguments():
         default="")
     parser.add_argument('-l', '--location',
         help="Create location files. Merges data files with location files",
+        action='store_true')
+    parser.add_argument('-n', '--rename',
+        help="Renames column of processed location files. Requires -l to have run first.",
         action='store_true')
     parser.add_argument('-r', '--recursive',
         help="If set, all climate data files in data-dir and all its subdirectories are recursively pre-processed.",
@@ -54,7 +57,7 @@ def get_filename(directory, pattern):
 
 def merge_location_data(data_dir, output_dir):
     """Merges climate data with station location data.
-    The output file will be named `station_{station ID}_l.csv`.
+    The output file will be named according to `get_output_filename()`.
 
     Parameters
     ----------
@@ -102,6 +105,58 @@ def merge_location_data(data_dir, output_dir):
     ), index=False)
 
 
+def rename_location_data(data_dir, output_dir, on_error='retry'):
+    """Renames columns of pre-processed location data.
+    The output file will be named according to `get_output_filename()`.
+
+    Parameters
+    ----------
+    data_dir : str
+               Directory containing the preprocessed location data file.
+    output_dir : str
+                 Directory in which the merge result should be placed.
+    """
+
+    data_file_path = os.path.join(
+        data_dir,
+        get_filename(data_dir, FILENAME_FORMATS['PROCESSED_LOCATION_DATA']) or ""
+    )
+
+    if not os.path.isfile(data_file_path):
+        return
+
+    try:
+        column_map = {
+            'STATIONS_ID': 'station_id',
+            'MESS_DATUM': 'date',
+            'Stationshoehe': 'height',
+            'Geogr.Breite': 'latitude',
+            'Geogr.Laenge': 'longitude',
+            'Stationsname': 'location',
+        }
+
+        data = pd.read_csv(data_file_path)
+        data.rename(columns=column_map, inplace=True)
+        data.rename(columns=str.lower, inplace=True)
+
+        station_id = data.iloc[0, 0]
+
+        data.to_csv(os.path.join(
+            output_dir,
+            get_output_filename(station_id, 'ln')
+        ), index=False)
+
+    except IndexError:
+        if on_error == 'error':
+            raise IndexError
+        # The merge probably failed. Redo and retry, if still fails, log
+        merge_location_data(data_dir, data_dir)
+        try:
+            rename_location_data(data_dir, output_dir, 'error')
+        except IndexError:
+            print("Failed to rename {}".format(data_file_path))
+
+
 def process_dir(data_dir, output_dir, processing_steps):
     """Pre-processes climate data in given directory.
 
@@ -115,6 +170,8 @@ def process_dir(data_dir, output_dir, processing_steps):
 
     if processing_steps['merge_location']:
         merge_location_data(data_dir, output_dir)
+    if processing_steps['rename_location']:
+        rename_location_data(data_dir, output_dir)
 
 
 def pre_process():
@@ -122,6 +179,7 @@ def pre_process():
 
     processing_steps = {
         'merge_location': args.location,
+        'rename_location': args.rename,
     }
     
     if not args.recursive:
