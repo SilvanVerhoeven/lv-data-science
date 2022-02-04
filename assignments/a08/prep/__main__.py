@@ -1,5 +1,7 @@
 import argparse
+from logging import root
 import os
+from pydoc import allmethods
 import pandas as pd
 import re
 from tqdm import tqdm
@@ -12,9 +14,10 @@ CONFIG = {
 }
 
 FILENAME_FORMATS = {
-    'CLIMATE_DATA': 'produkt_[a-z]{2}_stunde_(\d{8}_\d{8})?_(\d*).txt',
-    'LOCATION_DATA': 'Metadaten_Geographie_(\d*).txt',
-    'PROCESSED_LOCATION_DATA': 'processed_(\d*)_l.csv',
+    'CLIMATE_DATA': 'produkt_[a-z]{2}_stunde_(\d{8}_\d{8})?_(?P<station_id>\d*).txt',
+    'LOCATION_DATA': 'Metadaten_Geographie_(?P<station_id>\d*).txt',
+    'PROCESSED_LOCATION_DATA': 'processed_(?P<station_id>\d*)_l.csv',
+    'PROCESSED_RENAMED_DATA': 'processed_(?P<station_id>\d*)_ln.csv',
 }
 
 
@@ -36,6 +39,9 @@ def parse_arguments():
         action='store_true')
     parser.add_argument('-n', '--rename',
         help="Renames column of processed location files. Requires -l to have run first.",
+        action='store_true')
+    parser.add_argument('-m', '--merge',
+        help="Merge all climate data of a station into one file. Requires -ln to have run first.",
         action='store_true')
     parser.add_argument('-r', '--recursive',
         help="If set, all climate data files in data-dir and all its subdirectories are recursively pre-processed.",
@@ -157,6 +163,90 @@ def rename_location_data(data_dir, output_dir, on_error='retry'):
             print("Failed to rename {}".format(data_file_path))
 
 
+def merge_climate_data(data_files_paths, output_dir):
+    """Merges all given climate data files into one."""
+
+    merged_data = pd.read_csv(data_files_paths[0])
+
+    print(merged_data.head())
+
+    for file_path in data_files_paths[1:]:
+        data = pd.read_csv(file_path)
+        non_overlapping_columns = data.columns.difference(merged_data.columns).values.tolist()
+        merged_data = pd.merge(
+            merged_data,
+            data[['date']+non_overlapping_columns],
+            on='date',
+            how='left'
+        )
+    
+    station_id = 44
+    merged_data.to_csv(os.path.join(
+        output_dir,
+        get_output_filename(station_id, 'lnm')
+    ), index=False)
+
+def _get_matching_file_paths(dir, regexes):
+    """
+    Returns a dict matching a station_id to a list of file paths whose file names match one of the given RegEx patterns.
+
+    Parameters
+    ----------
+    dir : str
+        Directory to search for files in.
+    regexes : pattern object[]
+        RegEx Pattern Objects to match filenames with.
+
+    Returns
+    -------
+    Dict station_id : str -> file_paths : str[]
+    """
+
+    matches = {}
+
+    for filename in os.listdir(dir):
+        file_path = os.path.join(dir, filename)
+        if not os.path.isfile(file_path):
+            continue
+        for regex in regexes:
+            match = regex.match(filename)
+            if not match:
+                continue
+            station_id = match.group('station_id')
+            matches[station_id] = matches.get(station_id, []) + [file_path]
+    
+    return matches
+
+
+def get_file_paths(root_dir, patterns, recursive=False):
+    """
+    Returns a dict matching a station_id to a list of file paths whose file names matched one of the given RegEx patterns.
+
+    Parameters
+    ----------
+    root_dir : str
+        Directory to search for files in.
+    patterns : str[]
+        RegEx patterns to match filenames with.
+    recursive : bool
+        If true, the whole file tree starting in `root_dir` is walked for matches.
+    """
+
+    res = [re.compile(pattern) for pattern in patterns]
+
+    if not recursive:
+        return _get_matching_file_paths(root_dir, res)
+    
+    all_matches = {}
+
+    for dir_path, _, _ in tqdm(os.walk(root_dir, topdown=False)):
+        matches = _get_matching_file_paths(dir_path, res)
+        for station_id, file_paths in matches.items():
+            all_matches[station_id] = all_matches.get(station_id, []) + file_paths
+    
+    return all_matches
+    
+
 def process_dir(data_dir, output_dir, processing_steps):
     """Pre-processes climate data in given directory.
 
@@ -172,6 +262,8 @@ def process_dir(data_dir, output_dir, processing_steps):
         merge_location_data(data_dir, output_dir)
     if processing_steps['rename_location']:
         rename_location_data(data_dir, output_dir)
+    if processing_steps['merge_data']:
+        get_file_paths(data_dir)
 
 
 def pre_process():
@@ -180,14 +272,22 @@ def pre_process():
     processing_steps = {
         'merge_location': args.location,
         'rename_location': args.rename,
+        'merge_data': args.merge,
     }
+
+    print("Collecting files...")
+    file_paths_by_station_id = get_file_paths(args.data_dir, [FILENAME_FORMATS['PROCESSED_RENAMED_DATA']], args.recursive)
     
-    if not args.recursive:
-        process_dir(args.data_dir, args.output_dir or args.data_dir, processing_steps)
-    else:
-        for dir_path, _, _ in tqdm(os.walk(args.data_dir, topdown=False)):
-            output_dir = args.output_dir or dir_path
-            process_dir(dir_path, output_dir, processing_steps)
+    print("Merging files...")
+    for station_id, file_paths in tqdm(file_paths_by_station_id.items()):
+        merge_climate_data(file_paths, args.output_dir)
+    
+    # if not args.recursive:
+    #     process_dir(args.data_dir, args.output_dir or args.data_dir, processing_steps)
+    # else:
+    #     for dir_path, _, _ in tqdm(os.walk(args.data_dir, topdown=False)):
+    #         output_dir = args.output_dir or dir_path
+    #         process_dir(dir_path, output_dir, processing_steps)
 
 if __name__ == '__main__':
     pre_process()
