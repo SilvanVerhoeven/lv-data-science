@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "geodl",
+            "type": "python",
+            "request": "launch",
+            "module": "geodl",
+            "args": [
+                "data/bahn_data.csv",
+                "-g=data/geo_data.csv"
+            ]
+        },
+        {
+            "name": "merge -a",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["data/bahn_data.csv", "data/dwd-lnc", "data/geo_data.csv", "-m=data/geo_climate_map.csv", "-a"]
+        },
+        {
+            "name": "merge",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["data/bahn_data.csv", "data/dwd-lnc", "data/geo_data.csv", "-m=data/geo_climate_map.csv"]
+        },
+        {
+            "name": "prep",
+            "type": "python",
+            "request": "launch",
+            "module": "prep",
+            "args": ["data/dwd", "-o=data/dwd-lnc", "-cr"]
+        }
+    ]
+}
