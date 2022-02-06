@@ -1,7 +1,5 @@
 import argparse
-from logging import root
 import os
-from pydoc import allmethods
 import pandas as pd
 import re
 from tqdm import tqdm
@@ -18,6 +16,7 @@ FILENAME_FORMATS = {
     'LOCATION_DATA': 'Metadaten_Geographie_(?P<station_id>\d*).txt',
     'PROCESSED_LOCATION_DATA': 'processed_(?P<station_id>\d*)_l.csv',
     'PROCESSED_RENAMED_DATA': 'processed_(?P<station_id>\d*)_ln.csv',
+    'PROCESSED_CLIMATE_DATA': 'processed_(?P<station_id>\d*)_lnc.csv',
 }
 
 
@@ -40,7 +39,7 @@ def parse_arguments():
     parser.add_argument('-n', '--rename',
         help="Renames column of processed location files. Requires -l to have run first.",
         action='store_true')
-    parser.add_argument('-m', '--merge',
+    parser.add_argument('-c', '--merge-cl',
         help="Merge all climate data of a station into one file. Requires -ln to have run first.",
         action='store_true')
     parser.add_argument('-r', '--recursive',
@@ -61,29 +60,36 @@ def get_filename(directory, pattern):
     return None
 
 
-def merge_location_data(data_dir, output_dir):
+def get_file_path(file_paths, pattern):
+    """Returns file_path in file_paths whose filename is matching the regex. Returns None at no matches."""
+    
+    regex = re.compile(pattern)
+    for file_path in file_paths:
+        if regex.match(os.path.basename(file_path)):
+            return file_path
+    
+    return None
+
+
+def merge_location_data(station_id, data_file_paths, output_dir):
     """Merges climate data with station location data.
     The output file will be named according to `get_output_filename()`.
 
     Parameters
     ----------
-    data_dir : str
-               Directory containing the location and climate data.
+    data_file_paths : str[]
+        List containing the location and climate data file path.
     output_dir : str
-                 Directory in which the merge result should be placed.
+        Directory in which the merge result should be placed. If empty, result will be placed in the directory of the climate data file.
     """
 
-    data_file_path = os.path.join(
-        data_dir,
-        get_filename(data_dir, FILENAME_FORMATS['CLIMATE_DATA']) or ""
-    )
-    location_file_path = os.path.join(
-        data_dir,
-        get_filename(data_dir, FILENAME_FORMATS['LOCATION_DATA']) or ""
-    )
+    data_file_path = get_file_path(data_file_paths, FILENAME_FORMATS['CLIMATE_DATA'])
+    location_file_path = get_file_path(data_file_paths, FILENAME_FORMATS['LOCATION_DATA'])
 
-    if not os.path.isfile(data_file_path) or not os.path.isfile(location_file_path):
+    if data_file_path is None or location_file_path is None:
         return
+
+    output_dir = output_dir or os.path.dirname(data_file_path)
 
     data = pd.read_csv(data_file_path, sep=CONFIG['SEPERATOR'], encoding=CONFIG['ENCODING'])
     data = data.apply(pd.to_numeric, errors='ignore')
@@ -111,25 +117,24 @@ def merge_location_data(data_dir, output_dir):
     ), index=False)
 
 
-def rename_location_data(data_dir, output_dir, on_error='retry'):
+def rename_location_data(station_id, data_file_paths, output_dir):
     """Renames columns of pre-processed location data.
     The output file will be named according to `get_output_filename()`.
 
     Parameters
     ----------
-    data_dir : str
-               Directory containing the preprocessed location data file.
+    data_file_paths : str
+        List of file paths containing the pre-processed location data files.
     output_dir : str
-                 Directory in which the merge result should be placed.
+        Directory in which the merge result should be placed. Will be directory of pre-processed location data file if empty. 
     """
 
-    data_file_path = os.path.join(
-        data_dir,
-        get_filename(data_dir, FILENAME_FORMATS['PROCESSED_LOCATION_DATA']) or ""
-    )
+    data_file_path = get_file_path(data_file_paths, FILENAME_FORMATS['PROCESSED_LOCATION_DATA'])
 
     if not os.path.isfile(data_file_path):
         return
+    
+    output_dir = output_dir or os.path.dirname(data_file_path)
 
     try:
         column_map = {
@@ -153,22 +158,15 @@ def rename_location_data(data_dir, output_dir, on_error='retry'):
         ), index=False)
 
     except IndexError:
-        if on_error == 'error':
-            raise IndexError
-        # The merge probably failed. Redo and retry, if still fails, log
-        merge_location_data(data_dir, data_dir)
-        try:
-            rename_location_data(data_dir, output_dir, 'error')
-        except IndexError:
-            print("Failed to rename {}".format(data_file_path))
+        print("Failed to rename {}".format(data_file_path))
 
 
-def merge_climate_data(data_files_paths, output_dir):
+def merge_climate_data(station_id, data_files_paths, output_dir):
     """Merges all given climate data files into one."""
 
     merged_data = pd.read_csv(data_files_paths[0])
 
-    print(merged_data.head())
+    output_dir = output_dir or os.path.dirname(data_files_paths[0])
 
     for file_path in data_files_paths[1:]:
         data = pd.read_csv(file_path)
@@ -180,11 +178,11 @@ def merge_climate_data(data_files_paths, output_dir):
             how='left'
         )
     
-    station_id = 44
     merged_data.to_csv(os.path.join(
         output_dir,
-        get_output_filename(station_id, 'lnm')
+        get_output_filename(station_id, 'lnc')
     ), index=False)
+
 
 def _get_matching_file_paths(dir, regexes):
     """
@@ -199,7 +197,7 @@ def _get_matching_file_paths(dir, regexes):
 
     Returns
     -------
-    Dict station_id : str -> file_paths : str[]
+    Dict station_id : int -> file_paths : str[]
     """
 
     matches = {}
@@ -212,7 +210,7 @@ def _get_matching_file_paths(dir, regexes):
             match = regex.match(filename)
             if not match:
                 continue
-            station_id = match.group('station_id')
+            station_id = int(match.group('station_id'))
             matches[station_id] = matches.get(station_id, []) + [file_path]
     
     return matches
@@ -230,6 +228,10 @@ def get_file_paths(root_dir, patterns, recursive=False):
         RegEx patterns to match filenames with.
     recursive : bool
         If true, the whole file tree starting in `root_dir` is walked for matches.
+
+    Returns
+    -------
+    Dict station_id : int -> file_paths : str[]
     """
 
     res = [re.compile(pattern) for pattern in patterns]
@@ -245,25 +247,49 @@ def get_file_paths(root_dir, patterns, recursive=False):
             all_matches[station_id] = all_matches.get(station_id, []) + file_paths
     
     return all_matches
+
+
+def get_process_strategy(strategy_id):
+    """Returns a strategy for the given strategy_id.
     
-
-def process_dir(data_dir, output_dir, processing_steps):
-    """Pre-processes climate data in given directory.
-
     Parameters
     ----------
-    data_dir : str
-               Directory containing a station's data which should be pre_processed.
-    output_dir : str
-                 Directory in which the pre-processing results should be placed.
+    strategy_id : 'merge_location' | 'rename_location' | 'merge_climate_data'
+        Identifier for one of the available strategies.
+    
+    Returns
+    -------
+    Dict function_id : str -> process_function : () => {}
     """
 
-    if processing_steps['merge_location']:
-        merge_location_data(data_dir, output_dir)
-    if processing_steps['rename_location']:
-        rename_location_data(data_dir, output_dir)
-    if processing_steps['merge_data']:
-        get_file_paths(data_dir)
+    strategy = {
+        'collect_files': lambda data_dir, file_formats, recursive: None,
+        'process': lambda station_id, file_paths, output_dir: None
+    }
+
+    if strategy_id == 'merge_location':
+        strategy['collect_files'] = lambda data_dir, recursive: get_file_paths(
+            data_dir,
+            [FILENAME_FORMATS['CLIMATE_DATA'], FILENAME_FORMATS['LOCATION_DATA']],
+            recursive
+        )
+        strategy['process'] = merge_location_data
+    elif strategy_id == 'rename_location':
+        strategy['collect_files'] = lambda data_dir, recursive: get_file_paths(
+            data_dir,
+            [FILENAME_FORMATS['PROCESSED_LOCATION_DATA']],
+            recursive
+        )
+        strategy['process'] = rename_location_data
+    elif strategy_id == 'merge_climate_data':
+        strategy['collect_files'] = lambda data_dir, recursive: get_file_paths(
+            data_dir,
+            [FILENAME_FORMATS['PROCESSED_RENAMED_DATA']],
+            recursive
+        )
+        strategy['process'] = merge_climate_data
+
+    return strategy
 
 
 def pre_process():
@@ -272,22 +298,25 @@ def pre_process():
     processing_steps = {
         'merge_location': args.location,
         'rename_location': args.rename,
-        'merge_data': args.merge,
+        'merge_climate_data': args.merge_cl,
     }
 
-    print("Collecting files...")
-    file_paths_by_station_id = get_file_paths(args.data_dir, [FILENAME_FORMATS['PROCESSED_RENAMED_DATA']], args.recursive)
-    
-    print("Merging files...")
-    for station_id, file_paths in tqdm(file_paths_by_station_id.items()):
-        merge_climate_data(file_paths, args.output_dir)
-    
-    # if not args.recursive:
-    #     process_dir(args.data_dir, args.output_dir or args.data_dir, processing_steps)
-    # else:
-    #     for dir_path, _, _ in tqdm(os.walk(args.data_dir, topdown=False)):
-    #         output_dir = args.output_dir or dir_path
-    #         process_dir(dir_path, output_dir, processing_steps)
+    for step_id, active in processing_steps.items():
+        if not active:
+            continue
+        print("++ Execute {} ++++++++++".format(step_id))
+
+        strategy = get_process_strategy(step_id)
+
+        print("Collecting files...")
+        file_paths_by_station_id = strategy['collect_files'](
+            args.data_dir,
+            args.recursive
+        )
+
+        print("Processing files...")
+        for station_id, file_paths in tqdm(file_paths_by_station_id.items()):
+                strategy['process'](station_id, file_paths, args.output_dir)
 
 if __name__ == '__main__':
     pre_process()
