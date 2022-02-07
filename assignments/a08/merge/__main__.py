@@ -2,27 +2,40 @@ import argparse
 from datetime import datetime
 import math
 import os
+from numpy import sort
 import pandas as pd
 from tqdm import tqdm
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
         "Merge bahn and climate data.")
-    parser.add_argument('bahn_data_path',
-        metavar="bahn-data-path",
-        help="Path to the file containing bahn data.")
-    parser.add_argument('climate_data_dir',
-        metavar="climate-data-dir",
-        help="Directory containing climate data files.")
-    parser.add_argument('geo_data_path',
-        metavar="geo-data-path",
-        help="Path to the file containing geo data (train stations with their respective coordinates).")
+    parser.add_argument('-b', '--bahn-data-dir',
+        help="Path to the directory containing bahn data files. Leave unset to not merge any data, but perform another operation.",
+        default=None)
+    parser.add_argument('-e', '--handle-end',
+        help="If true, the selected operation is performed on the end column. Otherwise the start column.",
+        action='store_true')
+    parser.add_argument('-c', '--climate-data-dir',
+        help="Directory containing climate data files.",
+        default=None)
+    parser.add_argument('-g', '--geo-data-path',
+        help="Path to the file containing geo data (train stations with their respective coordinates).",
+        default=None)
     parser.add_argument('-o', '--output-path',
         help="Path to output merge result (must end on .csv). File will be placed in bahn data directory if left unset.",
+        default='')
+    parser.add_argument('-d', '--output-dir',
+        help="Path to output directory.",
         default='')
     parser.add_argument('-m', '--mapping-data-path',
         help="Path to mapping data file (must end on .csv). Mapping data and file will be newly created in geo_data_path directory if unset.",
         default='')
+    parser.add_argument('-s', '--sort-bahn-data-path',
+        help="Path to bahn data file which should be sorted (must end on .csv).",
+        default=None)
+    parser.add_argument('-t', '--split-bahn-data-path',
+        help="Path to bahn data file being split.",
+        default=None)
     parser.add_argument('-a', '--annotate-climate',
         help="Annotate the climate data with the nearest train station.",
         action='store_true')
@@ -85,7 +98,47 @@ def annotate_climate_data(climate_data_dir, map_path):
         climate_data.to_csv(file_path, index=False)
 
 
-def merge_data(bahn_data_path, climate_data_dir, map_path, output_path):
+def sort_data(bahn_data_path, prefix):
+    """Sorts bahn_data by either start or end station."""
+
+    print("Loading bahn data...")
+    bahn_data = pd.read_csv(bahn_data_path, sep=';')
+    
+    station_column = '{}_station'.format(prefix)
+
+    print("Sorting bahn data by {}...".format(station_column))
+    bahn_data.sort_values(station_column, inplace=True)
+    sorted_bahn_data = bahn_data
+    sorted_output_path = os.path.join(os.path.dirname(bahn_data_path), "bahn_data_sorted_{}.csv".format(prefix))
+
+    print("Writing sorted bahn data...")
+    sorted_bahn_data.to_csv(sorted_output_path, index=False)
+    
+    print("Finished sorting.")
+
+
+def split(bahn_data_path, output_dir, split_column):
+    def clean(value):
+        cleaned = ''
+        for char in value.lower():
+            cleaned += char if char.isalpha() else '-'
+        return cleaned
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    print("Loading bahn data...")
+    sorted_bahn_data = pd.read_csv(bahn_data_path)
+    values = list(sorted_bahn_data[split_column].unique())
+
+    print("Splitting data...")
+    for value in tqdm(values):
+        data = sorted_bahn_data[sorted_bahn_data[split_column] == value]
+        output_path = os.path.join(output_dir, "bahn_data_split_{}_{}.csv".format(split_column, clean(value)))
+        data.to_csv(output_path, index=False)
+
+
+def merge_data(bahn_data_dir, climate_data_dir, map_path, output_path):
     """Merges bahn and climate data into one single file."""
 
     mapping = pd.read_csv(map_path, index_col='location').to_dict(orient='index')
@@ -100,14 +153,47 @@ def merge_data(bahn_data_path, climate_data_dir, map_path, output_path):
     
     for train_station, climate_stations in station_map.items():
         station_map[train_station] = sorted(climate_stations, key=lambda station: station[1])
-    
-    print("Loading bahn data...")
-    bahn_data = pd.read_csv(bahn_data_path, sep=';')
 
-    print("Merge data...")
-    for train_station, climate_stations in tqdm(station_map.items()):
-        for prefix in ['start', 'end']:
-            for cl_station in climate_stations:
+    open_mode = 'w'
+    for prefix in ['start', 'end']:
+        print("+++ Part: {} ++++++++++".format(prefix))
+
+        filenames = os.listdir(bahn_data_dir)
+        lap = 0
+        lap_total = len(filenames)
+        for filename in filenames:
+            lap += 1
+            file_path = os.path.join(bahn_data_dir, filename)
+            print("Processing file {}/{}: {}".format(lap, lap_total, file_path))
+
+            if '_{}_'.format(prefix) not in filename:
+                continue
+            
+            bahn_data = pd.read_csv(file_path)
+
+            all_columns = [
+                'date','start_station','end_station','departure_at','arrival_at','train','delay','delay_category','canceled',
+                'start_tf_std','start_v_te002','start_v_te020','start_rs_ind','start_absf_std','start_tt_std','start_qn_8','start_qn_3',
+                'start_vp_std','start_qn_2','start_d','start_v_te100','start_f','start_v_te005','start_v_te010','start_fx_911','start_td_std',
+                'start_qn_9','start_p_std','start_rf_std','start_r1','start_rf_tu','start_wrtr','start_v_te050','start_tt_tu',
+                'end_tf_std','end_v_te002','end_v_te020','end_rs_ind','end_absf_std','end_tt_std','end_qn_8','end_qn_3',
+                'end_vp_std','end_qn_2','end_d','end_v_te100','end_f','end_v_te005','end_v_te010','end_fx_911','end_td_std',
+                'end_qn_9','end_p_std','end_rf_std','end_r1','end_rf_tu','end_wrtr','end_v_te050','end_tt_tu',
+            ]
+
+            new_cols = list(set(all_columns) - set(bahn_data.columns.values.tolist()))
+
+            for column in new_cols:
+                bahn_data[column] = None
+
+            train_station = bahn_data.loc[0, '{}_station'.format(prefix)]
+
+            filled_columns = []
+
+            if train_station not in station_map:
+                continue
+
+            for cl_station in station_map[train_station]:
                 station_id = cl_station[0]
                 filename = 'processed_{:05d}_lnc.csv'.format(station_id)
                 file_path = os.path.join(climate_data_dir, filename)
@@ -115,27 +201,64 @@ def merge_data(bahn_data_path, climate_data_dir, map_path, output_path):
 
                 default_cl_cols = ['station_id', 'date', 'eor', 'height', 'latitude', 'longitude', 'location', 'train_station']
                 available_cols = list(set(cl_data.columns.values.tolist()) - set(default_cl_cols))
-                prefixed_available_cols = ['{}_{}'.format(prefix, col_name.strip()) for col_name in available_cols]
+                new_cols = list(set(available_cols) - set(filled_columns))
+                if new_cols == []:
+                    continue
+                prefixed_available_cols = ['{}_{}'.format(prefix, col_name.strip()) for col_name in new_cols]
+                filled_columns += new_cols
 
                 # insert all available values
-                for index, row in bahn_data.iterrows():
-                    bahn_datetime_str = row['date'] + row['departure_at' if prefix == 'start' else 'arrival_at']
+                for index in tqdm(range(len(bahn_data.index))):
+                    bahn_datetime_str = bahn_data.loc[index, 'date'] + \
+                        bahn_data.loc[index, 'departure_at' if prefix == 'start' else 'arrival_at']
                     date_time = datetime.strptime(bahn_datetime_str, '%d/%m/%Y%H:%M')
                     cl_datetime = int(datetime.strftime(date_time, '%Y%m%d%H'))
-                    for orig_col, prefixed_col in zip(available_cols, prefixed_available_cols):
-                        if prefixed_col not in row or row[prefixed_col] is None:
-                            bahn_data.loc[index, prefixed_col] = cl_data.at[cl_datetime, orig_col]
+                    for orig_col, prefixed_col in zip(new_cols, prefixed_available_cols):
+                        try:
+                            bahn_data.loc[index, prefixed_col]
+                        except KeyError:
+                            open('data/missing_cols.log', 'a').write(prefixed_col+'\n')
+                        if bahn_data.loc[index, prefixed_col] is None:
+                            try:
+                                value = cl_data.at[cl_datetime, orig_col]
+                            except KeyError:
+                                continue
+                            else:
+                                bahn_data.loc[index, prefixed_col] = value
     
-        bahn_data.to_csv(output_path)
+            open(output_path, open_mode).write(bahn_data.to_csv(index=False, header=open_mode=='w', line_terminator='\n'))
+            open_mode = 'a'
+    
+    print("Merging finished.")
 
 
 def merge():
     args = parse_arguments()
-    map_path = get_climate_geo_map(args.climate_data_dir, args.geo_data_path, args.mapping_data_path)
-    if args.annotate_climate:
-        annotate_climate_data(args.climate_data_dir, map_path)
-    output_path = args.output_path or os.path.join(os.path.dirname(args.bahn_data_path), 'data_total.csv')
-    merge_data(args.bahn_data_path, args.climate_data_dir, map_path, output_path)
+
+    map_path = args.mapping_data_path
+    if args.geo_data_path is not None:
+        map_path = get_climate_geo_map(args.climate_data_dir, args.geo_data_path, args.mapping_data_path)
+    
+    if args.sort_bahn_data_path is not None and not args.handle_end:
+        sort_data(args.sort_bahn_data_path, 'start')
+    
+    if args.sort_bahn_data_path is not None and args.handle_end:
+        sort_data(args.sort_bahn_data_path, 'end')
+
+    if args.split_bahn_data_path is not None and not args.handle_end:
+        split(args.split_bahn_data_path, args.output_dir, 'start_station')
+    
+    if args.split_bahn_data_path is not None and args.handle_end:
+        split(args.split_bahn_data_path, args.output_dir, 'end_station')
+    
+    # else:
+        
+    #     if args.annotate_climate:
+    #         annotate_climate_data(args.climate_data_dir, map_path)
+
+    if args.bahn_data_dir is not None:
+        output_path = args.output_path or os.path.join(os.path.dirname(args.bahn_data_dir), 'data_total.csv')
+        merge_data(args.bahn_data_dir, args.climate_data_dir, map_path, output_path)
 
 
 if __name__ == '__main__':
