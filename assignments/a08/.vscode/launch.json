@@ -19,14 +19,49 @@
             "type": "python",
             "request": "launch",
             "module": "merge",
-            "args": ["data/bahn_data.csv", "data/dwd-lnc", "data/geo_data.csv", "-m=data/geo_climate_map.csv", "-a"]
+            "args": ["data/bahn_data.csv", "data/dwd-lnc", "data/geo_data.csv", "-m=data/geo_climate_map.csv", "-a", "-s=data/bahn_data_sorted_start.csv", "-e=data/bahn_data_sorted_end.csv"]
         },
         {
             "name": "merge",
             "type": "python",
             "request": "launch",
             "module": "merge",
-            "args": ["data/bahn_data.csv", "data/dwd-lnc", "data/geo_data.csv", "-m=data/geo_climate_map.csv"]
+            "args": ["-b=data/bahn_data_split", "-c=data/dwd-lnc", "-o=data/bahn_data_total.csv", "-m=data/geo_climate_map.csv"]
+        },
+        {
+            "name": "merge test",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["-b=data/bahn_data_test_split", "-c=data/dwd-lnc", "-o=data/bahn_data_test_total.csv", "-m=data/geo_climate_map.csv"]
+        },
+        {
+            "name": "split",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["-t=data/bahn_data_sorted_end.csv", "-d=data/bahn_data_split_end", "-e"]
+        },
+        {
+            "name": "split test",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["-t=data/bahn_data_test_sorted_end.csv", "-d=data/bahn_data_test_split_end", "-e"]
+        },
+        {
+            "name": "sort test",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["-s=data/bahn_data_test.csv", "-e"]
+        },
+        {
+            "name": "sort",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["-s=data/bahn_data.csv", "-e"]
         },
         {
             "name": "prep",
