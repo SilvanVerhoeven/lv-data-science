@@ -2,6 +2,8 @@ import argparse
 from datetime import datetime
 import math
 import os
+import random
+import shutil
 from numpy import NaN
 import pandas as pd
 from tqdm import tqdm
@@ -36,6 +38,9 @@ def parse_arguments():
     parser.add_argument('-t', '--split-bahn-data-path',
         help="Path to bahn data file being split.",
         default=None)
+    parser.add_argument('-p', '--number-of-partitions',
+        help="Number of directories to partition bahn_data_dir files into.",
+        default=0, type=int)
     parser.add_argument('-a', '--annotate-climate',
         help="Annotate the climate data with the nearest train station.",
         action='store_true')
@@ -98,7 +103,7 @@ def annotate_climate_data(climate_data_dir, map_path):
         climate_data.to_csv(file_path, index=False)
 
 
-def sort_data(bahn_data_path, prefix):
+def sort_data(bahn_data_path, output_path, prefix):
     """Sorts bahn_data by either start or end station."""
 
     print("Loading bahn data...")
@@ -109,10 +114,9 @@ def sort_data(bahn_data_path, prefix):
     print("Sorting bahn data by {}...".format(station_column))
     bahn_data.sort_values(station_column, inplace=True)
     sorted_bahn_data = bahn_data
-    sorted_output_path = os.path.join(os.path.dirname(bahn_data_path), "bahn_data_sorted_{}.csv".format(prefix))
 
     print("Writing sorted bahn data...")
-    sorted_bahn_data.to_csv(sorted_output_path, index=False)
+    sorted_bahn_data.to_csv(output_path, index=False)
     
     print("Finished sorting.")
 
@@ -136,6 +140,34 @@ def split(bahn_data_path, output_dir, split_column):
         data = sorted_bahn_data[sorted_bahn_data[split_column] == value]
         output_path = os.path.join(output_dir, "bahn_data_split_{}_{}.csv".format(split_column, clean(value)))
         data.to_csv(output_path, index=False)
+
+
+def partition(bahn_data_dir, number_of_partitions):
+    """Partition the files in the given directory into `number_of_partition` partitions."""
+
+    filenames = set([filename for filename in os.listdir(bahn_data_dir) if os.path.isfile(os.path.join(bahn_data_dir, filename))])
+    files_total = len(filenames)
+    files_per_partition = files_total // number_of_partitions
+
+    for index in range(number_of_partitions):
+        print("Create partition {}/{}...".format(index+1, number_of_partitions))
+        partition_dir = os.path.normpath(bahn_data_dir) + '_{}'.format(index)
+        if not os.path.exists(partition_dir):
+            os.makedirs(partition_dir)
+        
+        if index==number_of_partitions-1:
+            partition_files = filenames
+        else:
+            partition_files = set(random.sample(filenames, files_per_partition))
+            filenames -= partition_files
+        
+        for filename in tqdm(partition_files):
+            file_path = os.path.join(bahn_data_dir, filename)
+            output_path = os.path.join(partition_dir, filename)
+            shutil.move(file_path, output_path)
+    
+    print("Data partitioned.")
+
 
 
 def merge_data(bahn_data_dir, climate_data_dir, map_path, output_path, prefix):
@@ -234,15 +266,15 @@ def merge_data(bahn_data_dir, climate_data_dir, map_path, output_path, prefix):
 def merge():
     args = parse_arguments()
 
+    prefix = 'end' if args.handle_end else 'start'
+
     map_path = args.mapping_data_path
     if args.geo_data_path is not None:
         map_path = get_climate_geo_map(args.climate_data_dir, args.geo_data_path, args.mapping_data_path)
     
-    if args.sort_bahn_data_path is not None and not args.handle_end:
-        sort_data(args.sort_bahn_data_path, 'start')
-    
-    if args.sort_bahn_data_path is not None and args.handle_end:
-        sort_data(args.sort_bahn_data_path, 'end')
+    if args.sort_bahn_data_path is not None:
+        output_path = args.output_path or os.path.join(os.path.dirname(args.sort_bahn_data_path), 'bahn_data_sorted_{}.csv'.format(prefix))
+        sort_data(args.sort_bahn_data_path,output_path,  prefix)
 
     if args.split_bahn_data_path is not None and not args.handle_end:
         split(args.split_bahn_data_path, args.output_dir, 'start_station')
@@ -250,14 +282,16 @@ def merge():
     if args.split_bahn_data_path is not None and args.handle_end:
         split(args.split_bahn_data_path, args.output_dir, 'end_station')
     
+    if args.number_of_partitions > 0:
+        partition(args.bahn_data_dir, args.number_of_partitions)
+    
     # else:
         
     #     if args.annotate_climate:
     #         annotate_climate_data(args.climate_data_dir, map_path)
 
-    if args.bahn_data_dir is not None:
-        prefix = 'end' if args.handle_end else 'start'
-        output_path = args.output_path or os.path.join(os.path.dirname(args.bahn_data_dir), 'data_total.csv')
+    if args.bahn_data_dir is not None and args.number_of_partitions == 0:
+        output_path = args.output_path or os.path.join(args.bahn_data_dir, 'data_total.csv')
         merge_data(args.bahn_data_dir, args.climate_data_dir, map_path, output_path, prefix)
 
 
