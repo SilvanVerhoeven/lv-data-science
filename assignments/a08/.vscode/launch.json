@@ -33,7 +33,7 @@
             "type": "python",
             "request": "launch",
             "module": "merge",
-            "args": ["-b=data/bahn_data_test_split", "-c=data/dwd-lnc", "-o=data/bahn_data_test_total.csv", "-m=data/geo_climate_map.csv"]
+            "args": ["-b=data/bahn_data_test_split_end", "-c=data/dwd-lnc", "-o=data/bahn_data_test_total.csv", "-m=data/geo_climate_map.csv", "-e"]
         },
         {
             "name": "split",
@@ -54,7 +54,7 @@
             "type": "python",
             "request": "launch",
             "module": "merge",
-            "args": ["-s=data/bahn_data_test.csv", "-e"]
+            "args": ["-s=data/bahn_data_test_total_start.csv", "-e"]
         },
         {
             "name": "sort",
