@@ -2,7 +2,6 @@ import argparse
 from datetime import datetime
 import math
 import os
-from numpy import sort
 import pandas as pd
 from tqdm import tqdm
 
@@ -102,7 +101,7 @@ def sort_data(bahn_data_path, prefix):
     """Sorts bahn_data by either start or end station."""
 
     print("Loading bahn data...")
-    bahn_data = pd.read_csv(bahn_data_path, sep=';')
+    bahn_data = pd.read_csv(bahn_data_path, sep=';' if prefix == 'start' else ',')
     
     station_column = '{}_station'.format(prefix)
 
@@ -138,7 +137,7 @@ def split(bahn_data_path, output_dir, split_column):
         data.to_csv(output_path, index=False)
 
 
-def merge_data(bahn_data_dir, climate_data_dir, map_path, output_path):
+def merge_data(bahn_data_dir, climate_data_dir, map_path, output_path, prefix):
     """Merges bahn and climate data into one single file."""
 
     mapping = pd.read_csv(map_path, index_col='location').to_dict(orient='index')
@@ -154,82 +153,81 @@ def merge_data(bahn_data_dir, climate_data_dir, map_path, output_path):
     for train_station, climate_stations in station_map.items():
         station_map[train_station] = sorted(climate_stations, key=lambda station: station[1])
 
+    all_columns = [
+        'date','start_station','end_station','departure_at','arrival_at','train','delay','delay_category','canceled',
+        'start_tf_std','start_v_te002','start_v_te020','start_rs_ind','start_absf_std','start_tt_std','start_qn_8','start_qn_3',
+        'start_vp_std','start_qn_2','start_d','start_v_te100','start_f','start_v_te005','start_v_te010','start_fx_911','start_td_std',
+        'start_qn_9','start_p_std','start_rf_std','start_r1','start_rf_tu','start_wrtr','start_v_te050','start_tt_tu',
+        'end_tf_std','end_v_te002','end_v_te020','end_rs_ind','end_absf_std','end_tt_std','end_qn_8','end_qn_3',
+        'end_vp_std','end_qn_2','end_d','end_v_te100','end_f','end_v_te005','end_v_te010','end_fx_911','end_td_std',
+        'end_qn_9','end_p_std','end_rf_std','end_r1','end_rf_tu','end_wrtr','end_v_te050','end_tt_tu',
+    ]
+
+    print("Merging {}...".format(prefix))
+
     open_mode = 'w'
-    for prefix in ['start', 'end']:
-        print("+++ Part: {} ++++++++++".format(prefix))
+    filenames = os.listdir(bahn_data_dir)
+    lap = 0
+    lap_total = len(filenames)
+    for filename in filenames:
+        file_path = os.path.join(bahn_data_dir, filename)
+        lap += 1
+        print("Processing file {}/{}: {}".format(lap, lap_total, file_path))
 
-        filenames = os.listdir(bahn_data_dir)
-        lap = 0
-        lap_total = len(filenames)
-        for filename in filenames:
-            lap += 1
-            file_path = os.path.join(bahn_data_dir, filename)
-            print("Processing file {}/{}: {}".format(lap, lap_total, file_path))
-
-            if '_{}_'.format(prefix) not in filename:
-                continue
+        if not '_{}_'.format(prefix) in filename:
+            continue
             
-            bahn_data = pd.read_csv(file_path)
+        bahn_data = pd.read_csv(file_path)
 
-            all_columns = [
-                'date','start_station','end_station','departure_at','arrival_at','train','delay','delay_category','canceled',
-                'start_tf_std','start_v_te002','start_v_te020','start_rs_ind','start_absf_std','start_tt_std','start_qn_8','start_qn_3',
-                'start_vp_std','start_qn_2','start_d','start_v_te100','start_f','start_v_te005','start_v_te010','start_fx_911','start_td_std',
-                'start_qn_9','start_p_std','start_rf_std','start_r1','start_rf_tu','start_wrtr','start_v_te050','start_tt_tu',
-                'end_tf_std','end_v_te002','end_v_te020','end_rs_ind','end_absf_std','end_tt_std','end_qn_8','end_qn_3',
-                'end_vp_std','end_qn_2','end_d','end_v_te100','end_f','end_v_te005','end_v_te010','end_fx_911','end_td_std',
-                'end_qn_9','end_p_std','end_rf_std','end_r1','end_rf_tu','end_wrtr','end_v_te050','end_tt_tu',
-            ]
+        new_cols = list(set(all_columns) - set(bahn_data.columns.values.tolist()))
 
-            new_cols = list(set(all_columns) - set(bahn_data.columns.values.tolist()))
+        for column in new_cols:
+            bahn_data[column] = NaN
 
-            for column in new_cols:
-                bahn_data[column] = None
+        train_station = bahn_data.loc[0, '{}_station'.format(prefix)]
 
-            train_station = bahn_data.loc[0, '{}_station'.format(prefix)]
+        filled_columns = []
 
-            filled_columns = []
+        if train_station not in station_map:
+            continue
 
-            if train_station not in station_map:
+        for cl_station in station_map[train_station]:
+            station_id = cl_station[0]
+            filename = 'processed_{:05d}_lnc.csv'.format(station_id)
+            file_path = os.path.join(climate_data_dir, filename)
+            cl_data = pd.read_csv(file_path, index_col='date')
+
+            default_cl_cols = ['station_id', 'date', 'eor', 'height', 'latitude', 'longitude', 'location', 'train_station']
+            available_cols = list(set(cl_data.columns.values.tolist()) - set(default_cl_cols))
+            new_cols = list(set(available_cols) - set(filled_columns))
+            if new_cols == []:
                 continue
+            prefixed_available_cols = ['{}_{}'.format(prefix, col_name.strip()) for col_name in new_cols]
+            filled_columns += new_cols
 
-            for cl_station in station_map[train_station]:
-                station_id = cl_station[0]
-                filename = 'processed_{:05d}_lnc.csv'.format(station_id)
-                file_path = os.path.join(climate_data_dir, filename)
-                cl_data = pd.read_csv(file_path, index_col='date')
-
-                default_cl_cols = ['station_id', 'date', 'eor', 'height', 'latitude', 'longitude', 'location', 'train_station']
-                available_cols = list(set(cl_data.columns.values.tolist()) - set(default_cl_cols))
-                new_cols = list(set(available_cols) - set(filled_columns))
-                if new_cols == []:
-                    continue
-                prefixed_available_cols = ['{}_{}'.format(prefix, col_name.strip()) for col_name in new_cols]
-                filled_columns += new_cols
-
-                # insert all available values
-                for index in tqdm(range(len(bahn_data.index))):
-                    bahn_datetime_str = bahn_data.loc[index, 'date'] + \
-                        bahn_data.loc[index, 'departure_at' if prefix == 'start' else 'arrival_at']
-                    date_time = datetime.strptime(bahn_datetime_str, '%d/%m/%Y%H:%M')
-                    cl_datetime = int(datetime.strftime(date_time, '%Y%m%d%H'))
-                    for orig_col, prefixed_col in zip(new_cols, prefixed_available_cols):
+            # insert all available values
+            for index in tqdm(range(len(bahn_data.index))):
+                bahn_datetime_str = bahn_data.loc[index, 'date'] + \
+                    bahn_data.loc[index, 'departure_at' if prefix == 'start' else 'arrival_at']
+                date_time = datetime.strptime(bahn_datetime_str, '%d/%m/%Y%H:%M')
+                cl_datetime = int(datetime.strftime(date_time, '%Y%m%d%H'))
+                for orig_col, prefixed_col in zip(new_cols, prefixed_available_cols):
+                    try:
+                        bahn_data.loc[index, prefixed_col]
+                    except KeyError:
+                        open('data/missing_cols.log', 'a').write(prefixed_col+'\n')
+                    if math.isnan(bahn_data.loc[index, prefixed_col]):
                         try:
-                            bahn_data.loc[index, prefixed_col]
+                            value = cl_data.at[cl_datetime, orig_col]
                         except KeyError:
-                            open('data/missing_cols.log', 'a').write(prefixed_col+'\n')
-                        if bahn_data.loc[index, prefixed_col] is None:
-                            try:
-                                value = cl_data.at[cl_datetime, orig_col]
-                            except KeyError:
-                                continue
-                            else:
-                                bahn_data.loc[index, prefixed_col] = value
+                            continue
+                        else:
+                            bahn_data.loc[index, prefixed_col] = value
+
+        open(output_path, open_mode, encoding="utf-8").write(bahn_data.to_csv(index=False, header=open_mode=='w', line_terminator='\n'))
+        open_mode = 'a'
     
-            open(output_path, open_mode).write(bahn_data.to_csv(index=False, header=open_mode=='w', line_terminator='\n'))
-            open_mode = 'a'
-    
-    print("Merging finished.")
+    print("Merging of {} finished.".format(prefix))
 
 
 def merge():
@@ -257,8 +255,9 @@ def merge():
     #         annotate_climate_data(args.climate_data_dir, map_path)
 
     if args.bahn_data_dir is not None:
+        prefix = 'end' if args.handle_end else 'start'
         output_path = args.output_path or os.path.join(os.path.dirname(args.bahn_data_dir), 'data_total.csv')
-        merge_data(args.bahn_data_dir, args.climate_data_dir, map_path, output_path)
+        merge_data(args.bahn_data_dir, args.climate_data_dir, map_path, output_path, prefix)
 
 
 if __name__ == '__main__':
