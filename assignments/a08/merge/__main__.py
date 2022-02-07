@@ -2,6 +2,7 @@ import argparse
 from datetime import datetime
 import math
 import os
+from numpy import NaN
 import pandas as pd
 from tqdm import tqdm
 
