@@ -50,6 +50,13 @@
             "args": ["-t=data/bahn_data_test_sorted_end.csv", "-d=data/bahn_data_test_split_end", "-e"]
         },
         {
+            "name": "partition test",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["-p=4", "-b=data/bahn_data_test_split_end"]
+        },
+        {
             "name": "sort test",
             "type": "python",
             "request": "launch",
