@@ -41,6 +41,9 @@ def parse_arguments():
     parser.add_argument('-p', '--number-of-partitions',
         help="Number of directories to partition bahn_data_dir files into.",
         default=0, type=int)
+    parser.add_argument('-r', '--reduce',
+        help="Reduce given bahn data to necessary wheather data on one line.",
+        action='store_true')
     parser.add_argument('-a', '--annotate-climate',
         help="Annotate the climate data with the nearest train station.",
         action='store_true')
@@ -263,6 +266,47 @@ def merge_data(bahn_data_dir, climate_data_dir, map_path, output_path, prefix):
     print("Merging of {} finished.".format(prefix))
 
 
+def reduceCanceled(value):
+    return 0 if math.isnan(value) else 1
+
+
+def reduce(bahn_data_dir, output_path, start_station, end_station,
+    cl_columns=['tt_tu', 'rf_tu', 'r1', 'p_std', 'fx911', 'f', 'v_te002', 'v_te005', 'v_te010', 'v_te020', 'v_te050', 'v_te100'],
+    b_columns=['date','start_station','end_station','departure_at','arrival_at','train','delay','canceled'],
+    map={'canceled':reduceCanceled}
+):
+    """Reduce the given bahn data to the given colums and line."""
+
+    prefixed_columns = []
+    for column in list(cl_columns):
+        for prefix in ['start', 'end']:
+            prefixed_columns += prefix+column
+    columns = list(b_columns) + prefixed_columns
+
+    data = None
+
+    filenames = os.listdir(bahn_data_dir)
+    for file_index, filename in enumerate(filenames):
+        print("Reducing file {}/{}: {}".format(file_index+1, len(filenames), filename))
+        file_path = os.path.join(bahn_data_dir, filename)
+        bahn_data = pd.read_csv(file_path)
+        
+        reduced_data = bahn_data.loc[bahn_data['start_station'] == start_station and bahn_data['end_station'] == end_station, columns]
+
+        for col, func in map.items():
+            reduced_data[col] = reduced_data[col].apply(func)
+        
+        if data is None:
+            data = reduced_data
+        else:
+            data = pd.concat(data, reduced_data)
+        
+        data.sort_values(by=['date', 'start_station', 'end_station'], inplace=True)
+        data.to_csv(output_path, index=False)
+
+    print("Reducing finished.")
+
+
 def merge():
     args = parse_arguments()
 
@@ -284,6 +328,9 @@ def merge():
     
     if args.number_of_partitions > 0:
         partition(args.bahn_data_dir, args.number_of_partitions)
+    
+    if args.reduce:
+        reduce(args.bahn_data_dir, args.output_path, 'Düsseldorf Hbf', 'Duisburg Hbf')
     
     # else:
         

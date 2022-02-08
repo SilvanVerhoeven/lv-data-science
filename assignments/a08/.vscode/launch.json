@@ -71,6 +71,13 @@
             "args": ["-s=data/bahn_data.csv", "-e"]
         },
         {
+            "name": "reduce",
+            "type": "python",
+            "request": "launch",
+            "module": "merge",
+            "args": ["-b=data/bahn_data_total", "-o=data/bahn_data_reduced.csv", "-r"]
+        },
+        {
             "name": "prep",
             "type": "python",
             "request": "launch",
