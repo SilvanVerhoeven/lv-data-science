@@ -90,6 +90,20 @@
             "request": "launch",
             "module": "prep",
             "args": ["data/dwd", "-o=data/dwd-lnc", "-cr"]
-        }
+        },
+        {
+            "name": "training split",
+            "type": "python",
+            "request": "launch",
+            "module": "linear",
+            "args": ["data/bahn_data_reduced.csv", "-o=data/linear-data", "-s=0.8"]
+        },
+        {
+            "name": "linear test",
+            "type": "python",
+            "request": "launch",
+            "module": "linear",
+            "args": ["data/linear-data/20220208-202613_data_training.csv", "-t=data/linear-data/20220208-202613_data_test.csv"]
+        },
     ]
 }
