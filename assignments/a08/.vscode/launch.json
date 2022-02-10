@@ -105,5 +105,19 @@
             "module": "linear",
             "args": ["data/linear-data/20220208-202613_data_training.csv", "-t=data/linear-data/20220208-202613_data_test.csv"]
         },
+        {
+            "name": "linear visualize",
+            "type": "python",
+            "request": "launch",
+            "module": "linear",
+            "args": ["data/linear-data/20220208-202613_data_training.csv", "-v"]
+        },
+        {
+            "name": "log test",
+            "type": "python",
+            "request": "launch",
+            "module": "linear",
+            "args": ["data/linear-data/20220208-202613_data_training.csv", "-tl=data/linear-data/20220208-202613_data_test.csv"]
+        },
     ]
 }
